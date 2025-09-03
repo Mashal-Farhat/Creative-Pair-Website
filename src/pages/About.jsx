@@ -267,7 +267,7 @@ export default function About() {
         >
           <div className="rounded-3xl overflow-hidden border border-brand-primary/20 backdrop-blur-md">
             <img
-              src="public/Frame 6.png"
+              src="/Frame 6.png"
               alt="Creative team"
               className="w-full h-[250px] object-cover"
             />
