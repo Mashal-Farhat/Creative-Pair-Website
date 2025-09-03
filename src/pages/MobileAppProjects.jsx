@@ -67,7 +67,7 @@ export default function MobileAppProjects() {
     const projects = [
         {
             id: 1,
-            icon: <img src="/public/lingo_fusion.png" alt="Lingo Fusion" className="w-16 h-16" />,
+            icon: <img src="/lingo_fusion.png" alt="Lingo Fusion" className="w-16 h-16" />,
             title: "Lingo Fusion",
             description: "Language learning app with realtime sync and auth.",
             technologies: ["Flutter", "Dart", "Firebase"],
@@ -76,7 +76,7 @@ export default function MobileAppProjects() {
         },
         {
             id: 2,
-            icon: <img src="/public/CWF.png" alt="Care Without Fear" className="w-18 h-18 " />,
+            icon: <img src="/CWF.png" alt="Care Without Fear" className="w-18 h-18 " />,
             title: "Care Without Fear",
             description: "Digitalizing health and child care with enhanced security feature, auth and secure payments.",
             technologies: ["Java", "Node.js", "Firebase", "XML"],
@@ -94,7 +94,7 @@ export default function MobileAppProjects() {
         },
         {
             id: 4,
-            icon: <img src="/public/budget_buddy.png" alt="Budget Buddy" className="w-25  h-15" />,
+            icon: <img src="/budget_buddy.png" alt="Budget Buddy" className="w-25  h-15" />,
             title: "Budget Buddy",
             description: "Personal finance tracker for smart budgeting.",
             technologies: ["Kotlin", "XML", "Firebase"],
