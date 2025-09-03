@@ -67,7 +67,7 @@ export default function WebAppProjects() {
     const projects = [
         {
             id: 1,
-            icon: <img src="/public/scents.png" alt="Scents" className="w-15 h-15 rounded-full" />,
+            icon: <img src="/scents.png" alt="Scents" className="w-15 h-15 rounded-full" />,
             title: "Scents",
             description: "Elegant product showcase site with smooth interactions.",
             technologies: ["HTML", "CSS", "JavaScript"],
@@ -87,7 +87,7 @@ export default function WebAppProjects() {
         },
         {
             id: 3,
-            icon: <img src="/public/icm_logo.png" alt="ICM" className="w-12 h-12 rounded-full"/>,
+            icon: <img src="/icm_logo.png" alt="ICM" className="w-12 h-12 rounded-full"/>,
             title: "ICM US",
             description: "A corporate WordPress website tailored for the US audience.",
             technologies: ["WordPress"],
@@ -97,7 +97,7 @@ export default function WebAppProjects() {
         },
         {
             id: 4,
-            icon: <img src="/public/icm_logo.png" alt="ICM" className="w-16 h-16 rounded-full"/>,
+            icon: <img src="/icm_logo.png" alt="ICM" className="w-16 h-16 rounded-full"/>,
             title: "ICM Canada",
             description: "A professional WordPress site built for Canadian users.",
             technologies: ["WordPress"],
