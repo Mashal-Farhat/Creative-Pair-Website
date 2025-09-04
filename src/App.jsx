@@ -13,12 +13,14 @@ import UIDesigns from "./pages/UIDesigns";
 import GraphicDesign from "./pages/GraphicDesign";
 import EComProjects from "./pages/E-comProjects";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <div className="bg-brand-dark text-white min-h-screen flex flex-col">
       <Navbar />
       <div className="flex-1">
+        <ScrollToTop />
         <Routes>
           {/* Main Pages */}
           <Route path="/" element={<Home />} />
