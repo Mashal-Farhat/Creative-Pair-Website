@@ -1,32 +1,80 @@
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
 export default function Footer() {
-    const year = new Date().getFullYear();
-    return (
-        <footer className="mt-12 border-t border-white/10 bg-black/20">
-            <div className="max-w-6xl mx-auto px-6 py-10 text-sm text-gray-400 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-                <div className="text-center md:text-left">
-                    <p className="text-white font-semibold">Creative Pair</p>
-                    <p className="text-gray-400">Where Creation meets Innovation</p>
-                </div>
-                <div className="flex items-center justify-center gap-4">
-                <a href="/home" className="hover:text-white transition-colors">Home</a>
-                    <a href="/about" className="hover:text-white transition-colors">About</a>
-                    <a href="/services" className="hover:text-white transition-colors">Services</a>
-                    <a href="/projects" className="hover:text-white transition-colors">Projects</a>
-                    <a href="/contact" className="hover:text-white transition-colors">Contact</a>
-                </div>
-                <div className="text-center md:text-right">
-                    <p className="text-white font-semibold">Contact</p>
-                    <p><a href="mailto:creativepair.team@gmail.com" className="hover:text-white transition-colors">hr.creativepair@gmail.com</a></p>
-                    <p><a href="tel:+923001234567" className="hover:text-white transition-colors">(+92) 327 4968541</a></p>
-                </div>
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Services", path: "/services" },
+    { name: "Projects", path: "/projects" },
+    { name: "Contact", path: "/contact" },
+  ];
+
+  // Variants for link animation
+  const linkVariants = {
+    hover: {
+      scale: 1.1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+      },
+    },
+  };
+
+  return (
+    <footer className="bg-gray-900 text-white py-8 px-8 shadow-md">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+        {/* Website Name/Logo - Left */}
+        <div className="flex items-center">
+          <Link to="/" className="flex items-center font-bold text-xl">
+            <div className="w-11 h-11 flex items-center justify-center mr-2">
+              <img
+                src="/logo__2.png"
+                alt="CP"
+                className="w-full h-full object-contain"
+              />
             </div>
-            <div className="border-t border-white/10">
-                <div className="max-w-6xl mx-auto px-6 py-4 text-xs text-gray-500 text-center">
-                    © {year} Creative Pair. All rights reserved.
-                </div>
-            </div>
-        </footer>
-    );
+            Creative Pair
+          </Link>
+        </div>
+
+        {/* Menu Links - Center */}
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
+          {navLinks.map((link, index) => (
+            <motion.div
+              key={index}
+              variants={linkVariants}
+              whileHover="hover"
+              className="relative"
+            >
+              <Link
+                to={link.path}
+                className="text-white hover:text-brand-light transition-colors duration-300"
+              >
+                {link.name}
+                <motion.span
+                  className="absolute left-0 -bottom-1 w-full h-[2px] bg-brand-light origin-left"
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Contact Information - Right */}
+        <div className="text-center md:text-right">
+          <p className="text-sm">Contact Us</p>
+          <p className="text-sm">Email: hr.creativepair@gmail.com</p>
+          <p className="text-sm">Phone: (+92) 327-4968541</p>
+        </div>
+      </div>
+
+      {/* Bottom Copyright */}
+      <div className="mt-6 text-center text-sm text-gray-400">
+        &copy; {new Date().getFullYear()} Creative Pair. All rights reserved.
+      </div>
+    </footer>
+  );
 }
-
-
