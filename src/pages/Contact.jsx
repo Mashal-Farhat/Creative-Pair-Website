@@ -109,30 +109,26 @@ const ContactPage = () => {
     };
   }, []);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const form = e.target;
-    const data = new FormData(form);
+    const formDataToSend = new FormData();
+    formDataToSend.append("form-name", "contact");
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("company", formData.company);
+    formDataToSend.append("subject", formData.subject);
+    formDataToSend.append("message", formData.message);
 
     fetch("/", {
       method: "POST",
-      body: data,
+      body: formDataToSend,
     })
       .then(() => {
         alert("Thank you for your message! We’ll get back to you within 24 hours.");
-        form.reset();
       })
       .catch((error) => alert("Something went wrong: " + error));
   };
-
 
   const containerVariants = {
     hidden: { opacity: 0 },
