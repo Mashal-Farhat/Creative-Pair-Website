@@ -118,9 +118,21 @@ const ContactPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We’ll get back to you within 24 hours.');
+
+    const form = e.target;
+    const data = new FormData(form);
+
+    fetch("/", {
+      method: "POST",
+      body: data,
+    })
+      .then(() => {
+        alert("Thank you for your message! We’ll get back to you within 24 hours.");
+        form.reset();
+      })
+      .catch((error) => alert("Something went wrong: " + error));
   };
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -302,8 +314,8 @@ const ContactPage = () => {
                 onHoverStart={() => setHoveredCard(method.id)}
                 onHoverEnd={() => setHoveredCard(null)}
                 className={`relative bg-brand-card/20 backdrop-blur-md rounded-2xl p-6 border border-white/10 transition-all duration-500 cursor-pointer group ${hoveredCard && hoveredCard !== method.id
-                    ? "opacity-70"
-                    : "opacity-100"
+                  ? "opacity-70"
+                  : "opacity-100"
                   }`}
               >
                 <div
