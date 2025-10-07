@@ -108,7 +108,13 @@ const ContactPage = () => {
       window.removeEventListener("resize", resizeCanvas);
     };
   }, []);
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -126,9 +132,17 @@ const ContactPage = () => {
     })
       .then(() => {
         alert("Thank you for your message! We’ll get back to you within 24 hours.");
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          subject: "",
+          message: "",
+        });
       })
       .catch((error) => alert("Something went wrong: " + error));
   };
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
