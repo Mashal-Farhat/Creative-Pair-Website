@@ -1,8 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/png" href="/logo__2.png" />
-    <!-- Google tag (gtag.js) -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creative Pair</title>
+
+    <!-- ✅ Favicon -->
+    <link rel="icon" href="/logo__2.png" type="image/png" sizes="32x32" />
+    <link rel="shortcut icon" href="/logo__2.png" type="image/png" />
+
+    <!-- ✅ Structured Data for Google (shows your logo in search results) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://creativepair.site",
+        "logo": "https://creativepair.site/logo__2.png"
+      }
+    </script>
+
+    <!-- ✅ Google Analytics -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-G2PCZQHBLB"
@@ -13,14 +30,10 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-G2PCZQHBLB");
     </script>
-
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Creative Pair</title>
   </head>
+
   <body class="bg-brand-bg text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
