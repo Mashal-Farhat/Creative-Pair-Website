@@ -107,7 +107,7 @@ export default function DesignProjects() {
     ];
 
     return (
-        <div className="min-h-screen relative text-white overflow-hidden">
+        <div className="min-h-screen relative overflow-hidden" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
             {/* Fancy Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-950" />
             <motion.div
@@ -177,11 +177,7 @@ export default function DesignProjects() {
                             onHoverStart={() => setHoveredCard(project.id)}
                             onHoverEnd={() => setHoveredCard(null)}
                             onClick={() => setSelectedDesign(project)}
-                            className={`relative bg-white/5 backdrop-blur-md rounded-3xl p-4 border border-white/10 
-                                min-w-[200px] max-w-[250px] h-48 transition-all duration-500 cursor-pointer group
-                                ${project.hoverColor} ${
-                                hoveredCard && hoveredCard !== project.id ? "opacity-70" : "opacity-100"
-                            }`}
+                            className={`relative cp-glass rounded-3xl p-4 transition-all duration-500 cursor-pointer group ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id ? 'opacity-70' : 'opacity-100'}`}
                         >
                             <div
                                 className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}
@@ -205,11 +201,12 @@ export default function DesignProjects() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.3 }}
-                        className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900/90 backdrop-blur-md"
+                        className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-md"
+                        style={{ background: 'rgba(0,0,0,0.6)' }}
                         onClick={() => setSelectedDesign(null)}
                     >
                         <motion.div
-                            className="relative bg-white/5 backdrop-blur-md rounded-3xl p-6 max-w-2xl w-full mx-4 border border-[#f9a8d4]/20"
+                            className="relative cp-glass rounded-3xl p-6 max-w-2xl w-full mx-4"
                             style={{
                                 boxShadow: "0 0 20px rgba(249, 168, 212, 0.2)",
                                 background:
@@ -222,7 +219,7 @@ export default function DesignProjects() {
                                 alt={selectedDesign.title}
                                 className="w-full h-[400px] object-contain rounded-2xl mb-4"
                             />
-                            <h3 className="text-2xl font-bold text-center text-white">
+                            <h3 className="text-2xl font-bold text-center">
                                 {selectedDesign.title}
                             </h3>
                         </motion.div>

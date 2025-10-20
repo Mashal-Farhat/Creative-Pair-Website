@@ -55,15 +55,17 @@ export default function UIDesign() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white px-6 py-16 overflow-hidden">
+    <div className="relative min-h-screen px-6 py-16 overflow-hidden" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
       {/* === Glowing Gradient Orbs === */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-72 h-72 bg-green-500/20 rounded-full blur-3xl"
+        className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full blur-3xl"
+        style={{ backgroundColor: 'var(--cp-accent2)', opacity: 0.12 }}
         animate={{ scale: [1, 1.2, 1], opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 6, repeat: Infinity }}
       />
       <motion.div
-        className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl"
+        className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full blur-3xl"
+        style={{ backgroundColor: 'var(--cp-accent)', opacity: 0.12 }}
         animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -110,19 +112,16 @@ export default function UIDesign() {
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ y: -8, scale: 1.02 }}
-            className="group block bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-teal-400/40 transition-all duration-300"
+            className="group block cp-glass rounded-2xl p-6 hover:border-teal-400/40 transition-all duration-300"
           >
             <h3 className="text-xl font-bold mb-4 group-hover:text-teal-400 transition-colors">
               {project.title}
             </h3>
 
-            <p className="text-sm text-gray-400 mb-2">Tools:</p>
+            <p className="text-sm mb-2 cp-text-muted">Tools:</p>
             <ul className="flex flex-wrap gap-2 mb-4">
               {project.tools.map((tool, i) => (
-                <li
-                  key={i}
-                  className="bg-green-500/20 text-green-400 text-xs px-3 py-1 rounded-full"
-                >
+                <li key={i} className="bg-green-500/20 text-green-400 text-xs px-3 py-1 rounded-full">
                   {tool}
                 </li>
               ))}

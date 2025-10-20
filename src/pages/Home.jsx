@@ -44,7 +44,8 @@ export default function Home() {
         this.size = Math.random() * 2 + 0.5;
         this.speedX = Math.random() * 0.5 - 0.25;
         this.speedY = Math.random() * 0.5 - 0.25;
-        this.color = `rgba(110, 142, 251, ${Math.random() * 0.3})`;
+        // Use accent2 color for particles (convert hex to rgba via CSS variable in draw)
+        this.color = `rgba(70, 92, 136, ${Math.random() * 0.3})`;
       }
 
       update() {
@@ -78,9 +79,7 @@ export default function Home() {
 
           if (distance < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(110, 142, 251, ${
-              0.1 * (1 - distance / 100)
-            })`;
+            ctx.strokeStyle = `rgba(70, 92, 136, ${0.08 * (1 - distance / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -123,7 +122,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-dark to-brand-darker text-white flex flex-col items-center justify-center px-6 py-20 overflow-hidden relative">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden relative" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
       {/* Custom Loader Overlay */}
       {isLoading && (
         <motion.div
@@ -137,7 +136,8 @@ export default function Home() {
             {/* Particle Orbit Animation */}
             <div className="relative w-24 h-24">
               <motion.div
-                className="absolute w-4 h-4 rounded-full bg-brand-primary/50"
+                className="absolute w-4 h-4 rounded-full"
+                style={{ backgroundColor: 'var(--cp-accent)', opacity: 0.5 }}
                 animate={{
                   rotate: 360,
                   x: [0, 40, 0, -40, 0],
@@ -150,7 +150,8 @@ export default function Home() {
                 }}
               />
               <motion.div
-                className="absolute w-4 h-4 rounded-full bg-blue-500/50"
+                className="absolute w-4 h-4 rounded-full"
+                style={{ backgroundColor: 'var(--cp-accent2)', opacity: 0.5 }}
                 animate={{
                   rotate: -360,
                   x: [0, -30, 0, 30, 0],
@@ -164,7 +165,8 @@ export default function Home() {
                 }}
               />
               <motion.div
-                className="absolute w-4 h-4 rounded-full bg-purple-600/50"
+                className="absolute w-4 h-4 rounded-full"
+                style={{ backgroundColor: 'var(--cp-accent)', opacity: 0.45 }}
                 animate={{
                   rotate: 360,
                   x: [0, 20, 0, -20, 0],
@@ -177,7 +179,7 @@ export default function Home() {
                   delay: 0.6,
                 }}
               />
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-600/20 animate-pulse"></div>
+              <div className="absolute inset-0 rounded-full animate-pulse" style={{ background: 'linear-gradient(90deg, var(--cp-accent2)/0.2, var(--cp-accent)/0.2)' }}></div>
             </div>
             {/* Loading Text */}
             <motion.p
@@ -205,18 +207,20 @@ export default function Home() {
       />
 
       {/* Gradient overlays */}
-      <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-brand-primary/10 to-transparent"></div>
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-brand-secondary/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-primary/5 rounded-full blur-3xl"></div>
+      <div className="absolute top-0 left-0 w-full h-96" style={{ background: 'linear-gradient(180deg, var(--cp-accent)/0.08, transparent)' }}></div>
+      <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'var(--cp-accent2)', opacity: 0.06 }}></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'var(--cp-accent)', opacity: 0.06 }}></div>
 
       {/* Floating elements */}
       <motion.div
-        className="absolute top-1/4 left-10 w-10 h-10 rounded-full bg-blue-500/20 pointer-events-none"
+        className="absolute top-1/4 left-10 w-10 h-10 rounded-full pointer-events-none"
+        style={{ backgroundColor: 'var(--cp-accent2)', opacity: 0.12 }}
         animate={{ y: [0, 20, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute top-2/3 right-20 w-6 h-6 rounded-full bg-purple-500/20 pointer-events-none"
+        className="absolute top-2/3 right-20 w-6 h-6 rounded-full pointer-events-none"
+        style={{ backgroundColor: 'var(--cp-accent)', opacity: 0.12 }}
         animate={{ y: [0, 15, 0] }}
         transition={{
           duration: 4,
@@ -226,7 +230,8 @@ export default function Home() {
         }}
       />
       <motion.div
-        className="absolute bottom-1/4 left-1/4 w-8 h-8 rounded-full bg-green-500/20 pointer-events-none"
+        className="absolute bottom-1/4 left-1/4 w-8 h-8 rounded-full pointer-events-none"
+        style={{ backgroundColor: 'var(--cp-accent2)', opacity: 0.12 }}
         animate={{ y: [0, 25, 0] }}
         transition={{
           duration: 6,
@@ -245,12 +250,9 @@ export default function Home() {
       >
         <motion.div
           variants={itemVariants}
-          className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-brand-primary/10 border border-brand-primary/20"
-          whileHover={{
-            scale: 1.05,
-            backgroundColor: "rgba(110, 142, 251, 0.2)",
-            transition: { duration: 0.3 },
-          }}
+          className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full"
+          style={{ background: 'rgba(70,92,136,0.06)', border: '1px solid rgba(70,92,136,0.08)' }}
+          whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
         >
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
@@ -262,7 +264,7 @@ export default function Home() {
           >
             <Sparkles className="w-4 h-4 text-brand-primary" />
           </motion.div>
-          <span className="text-brand-primary text-sm font-medium">
+          <span className="text-accent2 text-sm font-medium">
             Where Creation meets Innovation
           </span>
         </motion.div>
@@ -272,7 +274,7 @@ export default function Home() {
           className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
         >
           Creative Solutions <br />
-          <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+          <span className="text-gradient">
             <Typewriter
               words={[
                 "Infinite Possibilities",
@@ -282,7 +284,7 @@ export default function Home() {
               typingSpeedMs={80}
               deleteSpeedMs={40}
               pauseMs={1300}
-              cursorClassName="text-white"
+              cursorClassName="text-current"
             />
           </span>
         </motion.h1>
@@ -315,9 +317,8 @@ export default function Home() {
           onHoverStart={() => setHoveredCard(1)}
           onHoverEnd={() => setHoveredCard(null)}
           onClick={() => navigate("/about")}
-          className={`bg-brand-card/20 backdrop-blur-md rounded-3xl p-6 border border-white/10 text-center transition-all duration-500 cursor-pointer ${
-            hoveredCard && hoveredCard !== 1 ? "opacity-70" : "opacity-100"
-          }`}
+          className={`bg-brand-card/20 backdrop-blur-md rounded-3xl p-6 border border-white/10 text-center transition-all duration-500 cursor-pointer ${hoveredCard && hoveredCard !== 1 ? "opacity-70" : "opacity-100"
+            }`}
         >
           <motion.img
             src="/Mashal.jpeg"
@@ -344,9 +345,8 @@ export default function Home() {
           onHoverStart={() => setHoveredCard(2)}
           onHoverEnd={() => setHoveredCard(null)}
           onClick={() => navigate("/projects")}
-          className={`bg-brand-card/20 backdrop-blur-md rounded-3xl p-6 border border-white/10 text-center transition-all duration-500 cursor-pointer ${
-            hoveredCard && hoveredCard !== 2 ? "opacity-70" : "opacity-100"
-          }`}
+          className={`bg-brand-card/20 backdrop-blur-md rounded-3xl p-6 border border-white/10 text-center transition-all duration-500 cursor-pointer ${hoveredCard && hoveredCard !== 2 ? "opacity-70" : "opacity-100"
+            }`}
         >
           <motion.img
             src="/Ammal.jpeg"
@@ -381,7 +381,8 @@ export default function Home() {
             }}
             while Hover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold shadow-lg hover:shadow-xl transition"
+            className="px-6 py-3 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition"
+            style={{ background: 'linear-gradient(90deg, var(--cp-accent2), var(--cp-accent))' }}
           >
             Get Started →
           </motion.button>
@@ -392,7 +393,8 @@ export default function Home() {
             }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-semibold hover:bg-white/20 transition"
+            className="px-6 py-3 rounded-xl text-white font-semibold hover:bg-white/20 transition"
+            style={{ background: 'rgba(0,0,0,0.04)', borderColor: 'var(--cp-border)' }}
           >
             View Our Work
           </motion.button>

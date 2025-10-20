@@ -30,7 +30,7 @@ export default function PortfolioWeb() {
                 this.size = Math.random() * 2 + 0.5;
                 this.speedX = Math.random() * 0.5 - 0.25;
                 this.speedY = Math.random() * 0.5 - 0.25;
-                this.color = `rgba(110, 142, 251, ${Math.random() * 0.3})`;
+                this.color = `rgba(70, 92, 136, ${Math.random() * 0.3})`;
             }
             update() {
                 this.x += this.speedX;
@@ -92,7 +92,7 @@ export default function PortfolioWeb() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white overflow-hidden relative">
+        <div className="min-h-screen overflow-hidden relative" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
             {/* Particle Background */}
             <canvas
                 ref={canvasRef}
@@ -106,9 +106,9 @@ export default function PortfolioWeb() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-[#c471ed]/10 border border-[#c471ed]/20">
-                        <Sparkles className="w-4 h-4 text-[#12c2e9]" />
-                        <span className="text-[#12c2e9] text-sm font-medium">Portfolio</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full" style={{ background: 'rgba(69,92,136,0.06)', border: '1px solid rgba(69,92,136,0.08)' }}>
+                        <Sparkles className="w-4 h-4 text-accent2" />
+                        <span className="text-accent2 text-sm font-medium">Portfolio</span>
                     </div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -116,7 +116,7 @@ export default function PortfolioWeb() {
                         transition={{ duration: 0.7, delay: 0.2 }}
                         className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
                     >
-                        Personal <span className="bg-gradient-to-r from-[#c471ed] to-[#12c2e9] text-transparent bg-clip-text">Portfolios</span>
+                        Personal <span className="text-gradient">Portfolios</span>
                     </motion.h1>
                 </motion.div>
             </section>
@@ -141,10 +141,7 @@ export default function PortfolioWeb() {
                                 window.open(pf.url, "_blank", "noopener,noreferrer");
                             }
                         }}
-                        className={`relative bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 
-              overflow-hidden transition-all duration-500 cursor-pointer group
-              ${pf.hoverColor} ${hoveredCard && hoveredCard !== pf.id ? "opacity-70" : "opacity-100"
-                            }`}
+                        className={`relative cp-glass rounded-3xl p-8 overflow-hidden transition-all duration-500 cursor-pointer group ${pf.hoverColor} ${hoveredCard && hoveredCard !== pf.id ? "opacity-70" : "opacity-100"}`}
                     >
                         {/* Gradient overlay */}
                         <div
@@ -160,8 +157,8 @@ export default function PortfolioWeb() {
                         </div>
 
                         <h3 className="text-2xl font-bold mb-1">{pf.name}</h3>
-                        <p className="text-sm text-blue-300 mb-4">{pf.role}</p>
-                        <p className="text-gray-300 mb-6 leading-relaxed">{pf.description}</p>
+                        <p className="text-sm text-accent2 mb-4">{pf.role}</p>
+                        <p className="mb-6 leading-relaxed cp-text-muted">{pf.description}</p>
 
                         <div className="flex flex-wrap gap-2">
                             {pf.technologies.map((tech, index) => (

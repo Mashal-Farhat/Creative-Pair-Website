@@ -30,7 +30,7 @@ export default function MobileAppProjects() {
                 this.size = Math.random() * 2 + 0.5;
                 this.speedX = Math.random() * 0.5 - 0.25;
                 this.speedY = Math.random() * 0.5 - 0.25;
-                this.color = `rgba(110, 142, 251, ${Math.random() * 0.3})`;
+                this.color = `rgba(70, 92, 136, ${Math.random() * 0.3})`;
             }
             update() {
                 this.x += this.speedX;
@@ -104,7 +104,7 @@ export default function MobileAppProjects() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white overflow-hidden relative">
+        <div className="min-h-screen overflow-hidden relative" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
             {/* Particle Background */}
             <canvas
                 ref={canvasRef}
@@ -118,9 +118,9 @@ export default function MobileAppProjects() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-[#00f260]/10 border border-[#00f260]/20">
-                        <Sparkles className="w-4 h-4 text-[#0575e6]" />
-                        <span className="text-[#0575e6] text-sm font-medium">Mobile Apps</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full" style={{ background: 'rgba(69,92,136,0.06)', border: '1px solid rgba(69,92,136,0.08)' }}>
+                        <Sparkles className="w-4 h-4 text-accent2" />
+                        <span className="text-accent2 text-sm font-medium">Mobile Apps</span>
                     </div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -148,10 +148,7 @@ export default function MobileAppProjects() {
                         whileHover={{ y: -15 }}
                         onHoverStart={() => setHoveredCard(project.id)}
                         onHoverEnd={() => setHoveredCard(null)}
-                        className={`relative bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 
-              overflow-hidden transition-all duration-500 cursor-default group
-              ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id ? "opacity-70" : "opacity-100"
-                            }`}
+                        className={`relative cp-glass rounded-3xl p-8 overflow-hidden transition-all duration-500 cursor-default group ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id ? "opacity-70" : "opacity-100"}`}
                     >
                         {/* Gradient overlay */}
                         <div

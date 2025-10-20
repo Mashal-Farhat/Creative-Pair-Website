@@ -77,7 +77,7 @@ export default function EComProjects() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white overflow-hidden relative">
+        <div className="min-h-screen overflow-hidden relative" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
             {/* Particle Background */}
             <canvas
                 ref={canvasRef}
@@ -91,9 +91,9 @@ export default function EComProjects() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-yellow-500/10 border border-yellow-500/20">
-                        <Sparkles className="w-4 h-4 text-yellow-400" />
-                        <span className="text-yellow-400 text-sm font-medium">E-Commerce</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full" style={{ background: 'rgba(69,92,136,0.06)', border: '1px solid rgba(69,92,136,0.08)' }}>
+                        <Sparkles className="w-4 h-4 text-accent2" />
+                        <span className="text-accent2 text-sm font-medium">E-Commerce</span>
                     </div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -124,10 +124,7 @@ export default function EComProjects() {
                         whileHover={{ y: -15 }}
                         onHoverStart={() => setHoveredCard(project.id)}
                         onHoverEnd={() => setHoveredCard(null)}
-                        className={`relative bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 
-              overflow-hidden transition-all duration-500 cursor-pointer group
-              ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id ? "opacity-70" : "opacity-100"
-                            }`}
+                        className={`relative cp-glass rounded-3xl p-8 overflow-hidden transition-all duration-500 cursor-pointer group ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id ? "opacity-70" : "opacity-100"}`}
                     >
                         {/* Gradient overlay */}
                         <div

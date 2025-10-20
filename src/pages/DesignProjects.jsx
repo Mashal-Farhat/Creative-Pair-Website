@@ -85,7 +85,7 @@ export default function DesignProjects() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white flex flex-col items-center justify-center px-6 overflow-hidden">
+    <div className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
       {/* Particle background */}
       <canvas
         ref={canvasRef}
@@ -99,17 +99,13 @@ export default function DesignProjects() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-            <Sparkles className="w-4 h-4 text-pink-400" />
-            <span className="text-pink-300 text-sm font-medium">
-              Explore Designs
-            </span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full" style={{ background: 'rgba(69,92,136,0.06)', border: '1px solid rgba(69,92,136,0.08)' }}>
+            <Sparkles className="w-4 h-4 text-accent2" />
+            <span className="text-accent2 text-sm font-medium">Explore Designs</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
             Choose Your{" "}
-            <span className="bg-gradient-to-r from-pink-400 to-purple-500 text-transparent bg-clip-text">
-              Design Category
-            </span>
+            <span className="text-gradient">Design Category</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
             Whether it’s modern UI layouts or creative graphics, explore our

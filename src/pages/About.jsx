@@ -35,7 +35,7 @@ export default function About() {
         this.size = Math.random() * 2 + 0.5;
         this.speedX = Math.random() * 0.5 - 0.25;
         this.speedY = Math.random() * 0.5 - 0.25;
-        this.color = `rgba(110, 142, 251, ${Math.random() * 0.3})`;
+        this.color = `rgba(70, 92, 136, ${Math.random() * 0.3})`;
       }
 
       update() {
@@ -76,8 +76,7 @@ export default function About() {
 
           if (distance < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(110, 142, 251, ${0.1 * (1 - distance / 100)
-              })`;
+            ctx.strokeStyle = `rgba(70,92,136, ${0.08 * (1 - distance / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -126,7 +125,7 @@ export default function About() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-dark to-brand-darker text-white px-4 py-12 overflow-hidden relative">
+    <div className="min-h-screen px-4 py-12 overflow-hidden relative" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
       {/* Animated background canvas */}
       <canvas
         ref={canvasRef}
@@ -134,9 +133,9 @@ export default function About() {
       />
 
       {/* Animated background elements */}
-      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-brand-primary/10 to-transparent"></div>
-      <div className="absolute top-1/4 right-0 w-80 h-80 bg-brand-secondary/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-brand-primary/5 rounded-full blur-3xl"></div>
+      <div className="absolute top-0 left-0 w-full h-64" style={{ background: 'linear-gradient(180deg, var(--cp-accent)/0.08, transparent)' }}></div>
+      <div className="absolute top-1/4 right-0 w-80 h-80 rounded-full blur-3xl" style={{ backgroundColor: 'var(--cp-accent2)', opacity: 0.06 }}></div>
+      <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-3xl" style={{ backgroundColor: 'var(--cp-accent)', opacity: 0.06 }}></div>
 
       {/* Floating elements */}
       <motion.div

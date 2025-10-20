@@ -22,7 +22,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gray-900 text-white py-8 px-8 shadow-md">
+    <footer className="py-8 px-8 shadow-md" style={{ backgroundColor: 'var(--cp-surface)', color: 'var(--cp-text)' }}>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
         {/* Website Name/Logo - Left */}
         <div className="flex items-center">
@@ -49,11 +49,11 @@ export default function Footer() {
             >
               <Link
                 to={link.path}
-                className="text-white hover:text-brand-light transition-colors duration-300"
+                className="text-current hover:text-accent transition-colors duration-300"
               >
                 {link.name}
                 <motion.span
-                  className="absolute left-0 -bottom-1 w-full h-[2px] bg-brand-light origin-left"
+                  className="absolute left-0 -bottom-1 w-full h-[2px] bg-accent origin-left"
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
                   transition={{ duration: 0.3 }}

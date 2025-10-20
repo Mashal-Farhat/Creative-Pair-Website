@@ -30,7 +30,7 @@ export default function WebAppProjects() {
                 this.size = Math.random() * 2 + 0.5;
                 this.speedX = Math.random() * 0.5 - 0.25;
                 this.speedY = Math.random() * 0.5 - 0.25;
-                this.color = `rgba(110, 142, 251, ${Math.random() * 0.3})`;
+                this.color = `rgba(70, 92, 136, ${Math.random() * 0.3})`;
             }
             update() {
                 this.x += this.speedX;
@@ -87,7 +87,7 @@ export default function WebAppProjects() {
         },
         {
             id: 3,
-            icon: <img src="/icm_logo.png" alt="ICM" className="w-12 h-12 rounded-full"/>,
+            icon: <img src="/icm_logo.png" alt="ICM" className="w-12 h-12 rounded-full" />,
             title: "ICM US",
             description: "A corporate WordPress website tailored for the US audience.",
             technologies: ["WordPress"],
@@ -97,7 +97,7 @@ export default function WebAppProjects() {
         },
         {
             id: 4,
-            icon: <img src="/icm_logo.png" alt="ICM" className="w-16 h-16 rounded-full"/>,
+            icon: <img src="/icm_logo.png" alt="ICM" className="w-16 h-16 rounded-full" />,
             title: "ICM Canada",
             description: "A professional WordPress site built for Canadian users.",
             technologies: ["WordPress"],
@@ -108,7 +108,7 @@ export default function WebAppProjects() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white overflow-hidden relative">
+        <div className="min-h-screen overflow-hidden relative" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
             {/* Particle Background */}
             <canvas
                 ref={canvasRef}
@@ -122,9 +122,9 @@ export default function WebAppProjects() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-[#20bdff]/10 border border-[#20bdff]/20">
-                        <Sparkles className="w-4 h-4 text-[#5433ff]" />
-                        <span className="text-[#5433ff] text-sm font-medium">Web Apps</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full" style={{ background: 'rgba(69,92,136,0.06)', border: '1px solid rgba(69,92,136,0.12)' }}>
+                        <Sparkles className="w-4 h-4 text-accent2" />
+                        <span className="text-accent2 text-sm font-medium">Web Apps</span>
                     </div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -132,7 +132,7 @@ export default function WebAppProjects() {
                         transition={{ duration: 0.7, delay: 0.2 }}
                         className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
                     >
-                        Our <span className="bg-gradient-to-r from-[#5433ff] to-[#20bdff] text-transparent bg-clip-text">Web Projects</span>
+                        Our <span className="text-gradient">Web Projects</span>
                     </motion.h1>
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Responsive sites and web apps with modern interactions.
@@ -155,10 +155,7 @@ export default function WebAppProjects() {
                         whileHover={{ y: -15 }}
                         onHoverStart={() => setHoveredCard(project.id)}
                         onHoverEnd={() => setHoveredCard(null)}
-                        className={`relative bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 
-              overflow-hidden transition-all duration-500 cursor-pointer group
-              ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id ? "opacity-70" : "opacity-100"
-                            }`}
+                        className={`relative cp-glass rounded-3xl p-8 overflow-hidden transition-all duration-500 cursor-pointer group ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id ? 'opacity-70' : 'opacity-100'}`}
                     >
                         {/* Gradient overlay */}
                         <div

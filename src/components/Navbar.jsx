@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -56,13 +57,14 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className="flex justify-between items-center px-8 py-4 bg-gray-900 shadow-md sticky top-0 z-50"
+      className="flex justify-between items-center px-8 py-4 shadow-md sticky top-0 z-50"
+      style={{ backgroundColor: 'var(--cp-surface)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
       {/* Logo */}
-      <Link to="/" className="flex items-center font-bold text-xl text-white">
+      <Link to="/" className="flex items-center font-bold text-xl text-current">
         <div className="w-11 h-11 flex items-center justify-center mr-2">
           <img
             src="/logo__2.png"
@@ -74,10 +76,26 @@ export default function Navbar() {
       </Link>
 
       {/* Hamburger Menu for Mobile/Tablet */}
-      <div className="md:hidden">
-        <button onClick={() => setIsOpen(!isOpen)} className="text-white">
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+      <div className="flex items-center gap-4">
+        {/* Theme toggle */}
+        <button
+          onClick={() => {
+            const shouldDark = !isDark;
+            setIsDark(shouldDark);
+            if (shouldDark) document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+          }}
+          aria-label="Toggle theme"
+          className="text-current"
+        >
+          {isDark ? <Sun size={20} /> : <Moon size={20} />}
         </button>
+
+        <div className="md:hidden">
+          <button onClick={() => setIsOpen(!isOpen)} className="text-current">
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Desktop Nav Links */}
@@ -91,11 +109,11 @@ export default function Navbar() {
           >
             <Link
               to={link.path}
-              className="text-white hover:text-brand-light transition-colors duration-300"
+              className="text-current hover:text-accent transition-colors duration-300"
             >
               {link.name}
               <motion.span
-                className="absolute left-0 -bottom-1 w-full h-[2px] bg-brand-light origin-left"
+                className="absolute left-0 -bottom-1 w-full h-[2px] bg-accent origin-left"
                 initial={{ scaleX: 0 }}
                 whileHover={{ scaleX: 1 }}
                 transition={{ duration: 0.3 }}
@@ -107,10 +125,11 @@ export default function Navbar() {
 
       {/* Side Drawer for Mobile/Tablet */}
       <motion.div
-        className="fixed top-0 right-0 h-full w-64 bg-gray-800 shadow-lg z-50 md:hidden"
+        className="fixed top-0 right-0 h-full w-64 shadow-lg z-50 md:hidden"
         initial="closed"
         animate={isOpen ? "open" : "closed"}
         variants={drawerVariants}
+        style={{ backgroundColor: 'var(--cp-surface)' }}
       >
         <div className="flex flex-col items-start p-6 space-y-4 mt-16">
           {navLinks.map((link, index) => (
@@ -124,7 +143,7 @@ export default function Navbar() {
             >
               <Link
                 to={link.path}
-                className="text-white text-lg hover:text-brand-light transition-colors duration-300"
+                className="text-current text-lg hover:text-accent transition-colors duration-300"
               >
                 {link.name}
               </Link>

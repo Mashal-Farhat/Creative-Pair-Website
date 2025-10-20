@@ -34,7 +34,7 @@ export default function Projects() {
         this.size = Math.random() * 2 + 0.5;
         this.speedX = Math.random() * 0.5 - 0.25;
         this.speedY = Math.random() * 0.5 - 0.25;
-        this.color = `rgba(110, 142, 251, ${Math.random() * 0.3})`;
+        this.color = `rgba(70, 92, 136, ${Math.random() * 0.3})`;
       }
       update() {
         this.x += this.speedX;
@@ -127,7 +127,7 @@ export default function Projects() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white overflow-hidden relative">
+    <div className="min-h-screen overflow-hidden relative" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
       {/* Particle Background */}
       <canvas
         ref={canvasRef}
@@ -176,12 +176,10 @@ export default function Projects() {
             onHoverStart={() => setHoveredCard(project.id)}
             onHoverEnd={() => setHoveredCard(null)}
             onClick={() => navigate(project.path)}
-            className={`relative bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 
-              overflow-hidden transition-all duration-500 cursor-pointer group
-              ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id
-                ? "opacity-70"
-                : "opacity-100"
-              }`}
+            className={
+              `relative backdrop-blur-md rounded-3xl p-8 border transition-all duration-500 cursor-pointer group ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id ? 'opacity-70' : 'opacity-100'
+              }`
+            }
           >
             {/* Gradient overlay */}
             <div
@@ -197,7 +195,7 @@ export default function Projects() {
             </div>
 
             <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
-            <p className="text-gray-300 mb-6 leading-relaxed">
+            <p className="mb-6 leading-relaxed" style={{ color: 'var(--cp-muted)' }}>
               {project.description}
             </p>
 
