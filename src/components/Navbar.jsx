@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X, Sun, Moon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -77,20 +77,6 @@ export default function Navbar() {
 
       {/* Hamburger Menu for Mobile/Tablet */}
       <div className="flex items-center gap-4">
-        {/* Theme toggle */}
-        <button
-          onClick={() => {
-            const shouldDark = !isDark;
-            setIsDark(shouldDark);
-            if (shouldDark) document.documentElement.classList.add('dark');
-            else document.documentElement.classList.remove('dark');
-          }}
-          aria-label="Toggle theme"
-          className="text-current"
-        >
-          {isDark ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
-
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="text-current">
             {isOpen ? <X size={24} /> : <Menu size={24} />}

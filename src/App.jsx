@@ -14,6 +14,7 @@ import GraphicDesign from "./pages/GraphicDesign";
 import EComProjects from "./pages/E-comProjects";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import ThemeToggle from "./components/ThemeToggle";
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
         </Routes>
       </div>
       <Footer />
+      {/* Floating theme toggle */}
+      <ThemeToggle />
     </div>
   );
 }

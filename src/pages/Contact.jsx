@@ -13,7 +13,7 @@ const ContactPage = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const canvasRef = useRef(null);
 
-  // Particle background effect
+  // Particle background effect (colors derived from CSS variables so theme updates apply)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -30,6 +30,11 @@ const ContactPage = () => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
+    // pick accent RGBs from CSS variables
+    const rootStyles = getComputedStyle(document.documentElement);
+    const accentRgb = (rootStyles.getPropertyValue('--cp-accent-rgb') || '255,122,48').trim();
+    const accent2Rgb = (rootStyles.getPropertyValue('--cp-accent2-rgb') || '70,92,136').trim();
+
     // Particle system
     const particles = [];
     const particleCount = 50;
@@ -41,7 +46,9 @@ const ContactPage = () => {
         this.size = Math.random() * 2 + 0.5;
         this.speedX = Math.random() * 0.5 - 0.25;
         this.speedY = Math.random() * 0.5 - 0.25;
-        this.color = `rgba(70, 92, 136, ${Math.random() * 0.3})`;
+        const base = Math.random() > 0.5 ? accent2Rgb : accentRgb;
+        this.color = `rgba(${base}, ${0.08 + Math.random() * 0.28})`;
+        this.strokeBase = base;
       }
 
       update() {
@@ -82,7 +89,7 @@ const ContactPage = () => {
 
           if (distance < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(70,92,136, ${0.08 * (1 - distance / 100)})`;
+            ctx.strokeStyle = `rgba(${particles[i].strokeBase}, ${0.08 * (1 - distance / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -174,13 +181,14 @@ const ContactPage = () => {
       />
 
       {/* Animated background elements */}
-      <div className="absolute top-0 left-0 w-full h-96" style={{ background: 'linear-gradient(180deg, var(--cp-accent)/0.08, transparent)' }}></div>
-      <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'var(--cp-accent2)', opacity: 0.06 }}></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'var(--cp-accent)', opacity: 0.06 }}></div>
+      <div className="absolute top-0 left-0 w-full h-96" style={{ background: `linear-gradient(180deg, rgba(var(--cp-accent-rgb),0.08), transparent)` }}></div>
+      <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full blur-3xl" style={{ background: `rgba(var(--cp-accent2-rgb),0.06)` }}></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl" style={{ background: `rgba(var(--cp-accent-rgb),0.06)` }}></div>
 
       {/* Floating elements */}
       <motion.div
-        className="absolute top-1/4 left-10 w-10 h-10 rounded-full bg-blue-500/20"
+        className="absolute top-1/4 left-10 w-10 h-10 rounded-full"
+        style={{ background: `rgba(var(--cp-accent2-rgb),0.14)` }}
         animate={{
           y: [0, 20, 0],
         }}
@@ -191,7 +199,8 @@ const ContactPage = () => {
         }}
       />
       <motion.div
-        className="absolute top-2/3 right-20 w-6 h-6 rounded-full bg-purple-500/20"
+        className="absolute top-2/3 right-20 w-6 h-6 rounded-full"
+        style={{ background: `rgba(var(--cp-accent-rgb),0.12)` }}
         animate={{
           y: [0, 15, 0],
         }}
@@ -203,7 +212,8 @@ const ContactPage = () => {
         }}
       />
       <motion.div
-        className="absolute bottom-1/4 left-1/4 w-8 h-8 rounded-full bg-green-500/20"
+        className="absolute bottom-1/4 left-1/4 w-8 h-8 rounded-full"
+        style={{ background: `rgba(var(--cp-accent-rgb),0.12)` }}
         animate={{
           y: [0, 25, 0],
         }}
@@ -225,24 +235,24 @@ const ContactPage = () => {
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-brand-primary/10 border border-brand-primary/20"
+            className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full"
+            style={{ background: `linear-gradient(90deg, rgba(var(--cp-accent2-rgb),0.06), rgba(var(--cp-accent-rgb),0.06))`, border: `1px solid rgba(var(--cp-accent-rgb),0.12)` }}
             whileHover={{
               scale: 1.05,
-              backgroundColor: "rgba(110, 142, 251, 0.2)",
-              transition: { duration: 0.3 },
+              transition: { duration: 0.25 },
             }}
           >
             <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
+              animate={{ scale: [1, 1.06, 1] }}
               transition={{
                 duration: 1.5,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
             >
-              <Sparkles className="w-4 h-4 text-brand-primary" />
+              <Sparkles className="w-4 h-4" style={{ color: `rgba(var(--cp-accent-rgb),0.95)` }} />
             </motion.div>
-            <span className="text-brand-primary text-sm font-medium">
+            <span style={{ color: `rgba(var(--cp-accent-rgb),0.92)` }} className="text-sm font-medium">
               Contact Us
             </span>
           </motion.div>
@@ -252,13 +262,13 @@ const ContactPage = () => {
             className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
           >
             Let’s Create Something{" "}
-            <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+            <span className="text-gradient">
               Amazing
             </span>
           </motion.h1>
           <motion.p
             variants={itemVariants}
-            className="text-lg text-brand-soft max-w-2xl mx-auto"
+            className="text-lg max-w-2xl mx-auto cp-text-muted"
           >
             Ready to transform your vision into reality? Get in touch with us and
             let’s discuss how we can bring your ideas to life.
@@ -328,18 +338,20 @@ const ContactPage = () => {
                   }`}
               >
                 <div
-                  className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl"
+                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl"
+                  style={{ background: `linear-gradient(135deg, rgba(var(--cp-accent2-rgb),0.08), rgba(var(--cp-accent-rgb),0.08))` }}
                 ></div>
                 <motion.div
-                  className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600/10 flex items-center justify-center mb-4"
-                  whileHover={{ scale: 1.1 }}
+                  className="w-12 h-12 rounded-full flex items-center justify-center mb-4"
+                  style={{ background: `linear-gradient(90deg, rgba(var(--cp-accent2-rgb),0.06), rgba(var(--cp-accent-rgb),0.06))` }}
+                  whileHover={{ scale: 1.06 }}
                 >
                   {method.icon}
                 </motion.div>
                 <div>
                   <h3 className="text-lg font-semibold">{method.title}</h3>
-                  <p className="text-brand-soft">{method.detail}</p>
-                  <span className="text-sm text-brand-soft/70">
+                  <p className="cp-text-muted">{method.detail}</p>
+                  <span className="text-sm cp-text-muted/70">
                     {method.subDetail}
                   </span>
                 </div>
@@ -354,7 +366,7 @@ const ContactPage = () => {
           className="bg-brand-card/20 backdrop-blur-md rounded-3xl p-8 border border-white/10"
         >
           <h2 className="text-2xl font-bold mb-4">Send Us a Message</h2>
-          <p className="text-brand-soft mb-8">
+          <p className="mb-8 cp-text-muted">
             Tell us about your project and we’ll get back to you with a detailed
             proposal.
           </p>
@@ -380,7 +392,7 @@ const ContactPage = () => {
                 className="space-y-2"
                 whileHover={{ scale: 1.02 }}
               >
-                <label htmlFor="name" className="text-sm font-medium text-white/90">
+                <label htmlFor="name" className="text-sm font-medium cp-text-muted">
                   Full Name *
                 </label>
                 <input
@@ -391,7 +403,8 @@ const ContactPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="John Doe"
-                  className="w-full bg-brand-dark/50 text-white border border-white/10 rounded-lg p-3 focus:border-brand-primary transition-border duration-300"
+                  className="w-full rounded-lg p-3"
+                  style={{ background: 'var(--cp-surface)', color: 'var(--cp-text)', border: '1px solid var(--cp-border)' }}
                 />
               </motion.div>
 
@@ -400,7 +413,7 @@ const ContactPage = () => {
                 className="space-y-2"
                 whileHover={{ scale: 1.02 }}
               >
-                <label htmlFor="email" className="text-sm font-medium text-white/90">
+                <label htmlFor="email" className="text-sm font-medium cp-text-muted">
                   Email Address *
                 </label>
                 <input
@@ -411,7 +424,8 @@ const ContactPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="john@example.com"
-                  className="w-full bg-brand-dark/50 text-white border border-white/10 rounded-lg p-3 focus:border-brand-primary transition-border duration-300"
+                  className="w-full rounded-lg p-3"
+                  style={{ background: 'var(--cp-surface)', color: 'var(--cp-text)', border: '1px solid var(--cp-border)' }}
                 />
               </motion.div>
             </div>
@@ -422,7 +436,7 @@ const ContactPage = () => {
                 className="space-y-2"
                 whileHover={{ scale: 1.02 }}
               >
-                <label htmlFor="company" className="text-sm font-medium text-white/90">
+                <label htmlFor="company" className="text-sm font-medium cp-text-muted">
                   Company
                 </label>
                 <input
@@ -432,7 +446,8 @@ const ContactPage = () => {
                   value={formData.company}
                   onChange={handleChange}
                   placeholder="Your Company Name"
-                  className="w-full bg-brand-dark/50 text-white border border-white/10 rounded-lg p-3 focus:border-brand-primary transition-border duration-300"
+                  className="w-full rounded-lg p-3"
+                  style={{ background: 'var(--cp-surface)', color: 'var(--cp-text)', border: '1px solid var(--cp-border)' }}
                 />
               </motion.div>
 
@@ -441,7 +456,7 @@ const ContactPage = () => {
                 className="space-y-2"
                 whileHover={{ scale: 1.02 }}
               >
-                <label htmlFor="subject" className="text-sm font-medium text-white/90">
+                <label htmlFor="subject" className="text-sm font-medium cp-text-muted">
                   Subject *
                 </label>
                 <input
@@ -452,7 +467,8 @@ const ContactPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="Project Inquiry"
-                  className="w-full bg-brand-dark/50 text-white border border-white/10 rounded-lg p-3 focus:border-brand-primary transition-border duration-300"
+                  className="w-full rounded-lg p-3"
+                  style={{ background: 'var(--cp-surface)', color: 'var(--cp-text)', border: '1px solid var(--cp-border)' }}
                 />
               </motion.div>
             </div>
@@ -462,7 +478,7 @@ const ContactPage = () => {
               className="space-y-2"
               whileHover={{ scale: 1.02 }}
             >
-              <label htmlFor="message" className="text-sm font-medium text-white/90">
+              <label htmlFor="message" className="text-sm font-medium cp-text-muted">
                 Message *
               </label>
               <textarea
@@ -473,19 +489,19 @@ const ContactPage = () => {
                 required
                 rows="5"
                 placeholder="Tell us about your project, goals, timeline, and budget..."
-                className="w-full bg-brand-dark/50 text-white border border-white/10 rounded-lg p-3 focus:border-brand-primary transition-border duration-300 resize-vertical"
+                className="w-full rounded-lg p-3 resize-vertical"
+                style={{ background: 'var(--cp-surface)', color: 'var(--cp-text)', border: '1px solid var(--cp-border)' }}
               />
             </motion.div>
 
             <motion.button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl font-medium border border-white/20"
+              className="w-full px-8 py-4 rounded-xl font-medium"
+              style={{ background: 'linear-gradient(90deg, rgba(var(--cp-accent2-rgb),0.95), rgba(var(--cp-accent-rgb),0.95))', color: '#fff', border: '1px solid rgba(255,255,255,0.06)' }}
               whileHover={{
-                scale: 1.05,
-                backgroundColor: "rgba(110, 142, 251, 0.1)",
-                borderColor: "rgba(110, 142, 251, 0.5)",
+                scale: 1.03,
               }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.96 }}
             >
               Send Message
             </motion.button>

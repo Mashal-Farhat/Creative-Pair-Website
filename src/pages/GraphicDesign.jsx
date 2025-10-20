@@ -7,7 +7,8 @@ export default function DesignProjects() {
     const [selectedDesign, setSelectedDesign] = useState(null);
     const canvasRef = useRef(null);
 
-    // Particle + Glow Background Effect
+    // Particle + Glow Background Effect (handled below and driven by CSS variables)
+    // Particle + Glow Background Effect (colors derived from CSS variables so theme updates are respected)
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -21,6 +22,11 @@ export default function DesignProjects() {
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
 
+        // read CSS variables for accents (fallback to sensible defaults)
+        const rootStyles = getComputedStyle(document.documentElement);
+        const accentRgb = (rootStyles.getPropertyValue('--cp-accent-rgb') || '255,122,48').trim();
+        const accent2Rgb = (rootStyles.getPropertyValue('--cp-accent2-rgb') || '70,92,136').trim();
+
         const particles = [];
         const particleCount = 60;
 
@@ -31,7 +37,12 @@ export default function DesignProjects() {
                 this.size = Math.random() * 2 + 0.7;
                 this.speedX = Math.random() * 0.6 - 0.3;
                 this.speedY = Math.random() * 0.6 - 0.3;
-                this.color = `rgba(249,168,212,${Math.random() * 0.4})`; // pink glow
+                // alternate between accent2 and accent hues for a richer palette
+                const useAccent2 = Math.random() > 0.5;
+                const base = useAccent2 ? accent2Rgb : accentRgb;
+                const alpha = 0.12 + Math.random() * 0.28;
+                this.color = `rgba(${base},${alpha})`;
+                this.shadow = `rgba(${base},${Math.max(0.6, alpha)})`;
             }
             update() {
                 this.x += this.speedX;
@@ -44,7 +55,7 @@ export default function DesignProjects() {
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fillStyle = this.color;
                 ctx.shadowBlur = 12;
-                ctx.shadowColor = "#f9a8d4"; // glowing pink
+                ctx.shadowColor = this.shadow;
                 ctx.fill();
                 ctx.shadowBlur = 0;
             }
@@ -109,15 +120,16 @@ export default function DesignProjects() {
     return (
         <div className="min-h-screen relative overflow-hidden" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
             {/* Fancy Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-950" />
+            {/* background overlay that respects theme variables */}
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0))' }} />
             <motion.div
                 className="absolute inset-0"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 }}
-                transition={{ duration: 1.5 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.2 }}
             >
-                <div className="absolute w-[600px] h-[600px] bg-pink-500/20 rounded-full blur-[120px] top-[-100px] left-[-200px] animate-pulse" />
-                <div className="absolute w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[150px] bottom-[-100px] right-[-200px] animate-pulse" />
+                <div className="absolute w-[600px] h-[600px] rounded-full blur-[120px] top-[-100px] left-[-200px] animate-pulse" style={{ background: 'linear-gradient(135deg, rgba(var(--cp-accent2-rgb),0.2), rgba(var(--cp-accent-rgb),0.18))' }} />
+                <div className="absolute w-[500px] h-[500px] rounded-full blur-[150px] bottom-[-100px] right-[-200px] animate-pulse" style={{ background: 'linear-gradient(135deg, rgba(var(--cp-accent-rgb),0.12), rgba(var(--cp-accent2-rgb),0.14))' }} />
             </motion.div>
             <canvas
                 ref={canvasRef}
@@ -131,9 +143,9 @@ export default function DesignProjects() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-[#f9a8d4]/10 border border-[#f9a8d4]/20">
-                        <Sparkles className="w-4 h-4 text-[#dd5e89]" />
-                        <span className="text-[#f9a8d4] text-sm font-medium">Graphic Designs</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full" style={{ background: 'linear-gradient(90deg, rgba(var(--cp-accent2-rgb),0.06), rgba(var(--cp-accent-rgb),0.06))', border: '1px solid rgba(var(--cp-accent-rgb),0.12)' }}>
+                        <Sparkles className="w-4 h-4" style={{ color: 'rgba(var(--cp-accent-rgb),0.95)' }} />
+                        <span style={{ color: 'rgba(var(--cp-accent-rgb),0.92)' }} className="text-sm font-medium">Graphic Designs</span>
                     </div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -142,11 +154,11 @@ export default function DesignProjects() {
                         className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
                     >
                         Our{" "}
-                        <span className="bg-gradient-to-r from-[#f9a8d4] to-[#dd5e89] text-transparent bg-clip-text">
+                        <span className="text-gradient">
                             Graphic Designs
                         </span>
                     </motion.h1>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                    <p className="text-lg max-w-2xl mx-auto cp-text-muted">
                         Creative graphic designs crafted for visual impact and storytelling.
                     </p>
                 </motion.div>

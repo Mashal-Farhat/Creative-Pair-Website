@@ -7,39 +7,51 @@
      #E9E3DF (background), #FF7A30 (accent1), #465C88 (accent2), #000000 (text)
   */
   --cp-bg: #E9E3DF;
-  --cp-surface: #ffffff;
+  --cp-surface: rgba(255,255,255,0.9); /* gentle paper surface */
+  --cp-surface-elev: rgba(255,255,255,0.98);
   --cp-text: #000000;
   --cp-accent: #FF7A30; /* primary accent */
   --cp-accent2: #465C88; /* secondary accent */
   --cp-muted: #6b7280; /* neutral muted */
+  /* rgb helpers for translucent effects */
+  --cp-accent-rgb: 255,122,48;
+  --cp-accent2-rgb: 70,92,136;
+  --cp-text-rgb: 0,0,0;
 
-  /* gradient stops using accents */
-  --cp-grad-1: rgba(69,92,136,1); /* #465C88 */
-  --cp-grad-2: rgba(255,122,48,1); /* #FF7A30 */
+  /* gradient stops using accents (accent2 -> accent) for a warm-to-cool sweep */
+  --cp-grad-1: rgba(var(--cp-accent2-rgb),1); /* #465C88 */
+  --cp-grad-2: rgba(var(--cp-accent-rgb),1); /* #FF7A30 */
+  /* Typography */
+  --font-heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'Merriweather', Georgia, serif;
 }
 
 /* Dark theme variables mapped from the light palette to keep contrast */
 .dark {
-  --cp-bg: #0b0c10; /* dark background */
-  --cp-surface: #0f1216; /* surface */
+  --cp-bg: linear-gradient(180deg, #06070a 0%, #0f1216 100%); /* subtle deep gradient */
+  --cp-surface: rgba(18,20,24,0.6); /* translucent surface for depth */
+  --cp-surface-elev: rgba(18,20,24,0.85);
   --cp-text: #E9E3DF; /* light text uses the light bg color */
-  --cp-accent: #FF7A30; /* keep accent vibrant in dark mode */
-  --cp-accent2: #465C88;
+  --cp-accent: #FF914D; /* slightly brighter in dark */
+  --cp-accent2: #7DA0D9; /* softened secondary */
   --cp-muted: #9aa3b2;
-  --cp-grad-1: rgba(255,122,48,1);
-  --cp-grad-2: rgba(69,92,136,1);
+  --cp-accent-rgb: 255,145,77;
+  --cp-accent2-rgb: 125,160,217;
+  --cp-text-rgb: 233,227,223; /* E9E3DF in rgb for dark-mode text */
+  --cp-grad-1: rgba(var(--cp-accent-rgb),1);
+  --cp-grad-2: rgba(var(--cp-accent2-rgb),1);
 }
 
 /* Helper variables for adaptive UI elements (glass cards, borders, and text rgba) */
 :root {
   --cp-surface-glass: rgba(0,0,0,0.04); /* subtle glass in light mode */
   --cp-border: rgba(0,0,0,0.06);
-  --cp-text-rgb: 0,0,0; /* black in light mode */
+  --cp-glow: rgba(255,122,48,0.14);
 }
 .dark {
   --cp-surface-glass: rgba(255,255,255,0.04); /* subtle glass in dark mode */
   --cp-border: rgba(255,255,255,0.08);
-  --cp-text-rgb: 233,227,223; /* E9E3DF in rgb for dark-mode text */
+  --cp-glow: rgba(255,145,77,0.12);
 }
 
 /* Utility classes that apps can use when inline styles are too verbose */
@@ -69,6 +81,10 @@
   body {
     background-color: var(--cp-bg);
     color: var(--cp-text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
   }
 
   /* Links and accent utilities fallback */
@@ -78,10 +94,52 @@
   .bg-accent2 { background-color: var(--cp-accent2); }
 }
 
+/* Headings: modern serif look */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
+  color: var(--cp-text);
+}
+
+h1 { font-weight: 800; font-size: clamp(1.75rem, 3.5vw, 3rem); line-height: 1.05; }
+h2 { font-weight: 700; font-size: clamp(1.25rem, 2.6vw, 2rem); }
+h3 { font-weight: 700; font-size: 1.125rem; }
+
+.lead { font-size: 1.125rem; color: rgba(var(--cp-text-rgb),0.86); }
+
 .text-gradient {
   background: linear-gradient(135deg, var(--cp-grad-2), var(--cp-grad-1));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
+}
+
+/* Fancy floating theme toggle (bottom-right) */
+.theme-toggle {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 60;
+  width: 54px;
+  height: 54px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  background: linear-gradient(135deg, rgba(var(--cp-accent2-rgb),0.95), rgba(var(--cp-accent-rgb),0.98));
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: white;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+  backdrop-filter: blur(6px);
+}
+.theme-toggle:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.22); }
+.theme-toggle:active { transform: translateY(0) scale(0.98); }
+.theme-toggle__inner { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:9999px; background: rgba(255,255,255,0.06); }
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle, .theme-toggle__inner { transition: none; }
 }
