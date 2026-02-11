@@ -183,7 +183,7 @@ export default function Home() {
                   className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 leading-tight"
                   style={{ 
                     color: colors.light,
-                    fontFamily: "'Manrope', sans-serif"
+                    fontFamily: "'Montserrat', sans-serif"
                   }}
                 >
                   CREATIVE SOLUTIONS
@@ -202,7 +202,7 @@ export default function Home() {
                   className="text-lg mb-6 max-w-xl mx-auto lg:mx-0"
                   style={{ 
                     color: colors.gray,
-                    fontFamily: "'Nunito Sans', sans-serif"
+                    fontFamily: "'Montserrat', sans-serif"
                   }}
                 >
                   Created with precision, designed for comfort and style in the digital world.
@@ -300,7 +300,7 @@ export default function Home() {
               className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12 text-center"
               style={{ 
                 color: colors.light,
-                fontFamily: "'Manrope', sans-serif"
+                fontFamily: "'Montserrat', sans-serif"
               }}
             >
               Our Identity
@@ -335,13 +335,13 @@ export default function Home() {
                       </div>
                       <h3 
                         className="text-2xl md:text-3xl font-bold mb-2"
-                        style={{ color: colors.light, fontFamily: "'Manrope', sans-serif" }}
+                        style={{ color: colors.light, fontFamily: "'Montserrat', sans-serif" }}
                       >
                         Founders' Vision
                       </h3>
                       <p 
                         className="text-base md:text-lg"
-                        style={{ color: colors.gray, fontFamily: "'Nunito Sans', sans-serif" }}
+                        style={{ color: colors.gray,fontFamily: "'Montserrat', sans-serif" }}
                       >
                         Mashal & Ammal
                       </p>
@@ -356,7 +356,7 @@ export default function Home() {
                   className="text-xl md:text-2xl leading-relaxed mb-8"
                   style={{ 
                     color: colors.gray,
-                    fontFamily: "'Nunito Sans', sans-serif"
+                    fontFamily: "'Montserrat', sans-serif"
                   }}
                 >
                   Creative Pair is a software house built on the belief that technology should be purposeful, reliable, and designed to create long-term value. We help businesses navigate complexity through well-engineered digital solutions.
@@ -373,7 +373,7 @@ export default function Home() {
                         className="text-xl md:text-2xl font-bold mb-2"
                         style={{ 
                           color: colors.light,
-                          fontFamily: "'Manrope', sans-serif"
+                          fontFamily: "'Montserrat', sans-serif"
                         }}
                       >
                         Mission
@@ -382,7 +382,7 @@ export default function Home() {
                         className="text-base md:text-lg"
                         style={{ 
                           color: colors.gray,
-                          fontFamily: "'Nunito Sans', sans-serif"
+                          fontFamily: "'Montserrat', sans-serif"
                         }}
                       >
                         Transform ideas into dependable digital products through clean engineering and strategic insight.
@@ -400,7 +400,7 @@ export default function Home() {
                         className="text-xl md:text-2xl font-bold mb-2"
                         style={{ 
                           color: colors.light,
-                          fontFamily: "'Manrope', sans-serif"
+                          fontFamily: "'Montserrat', sans-serif"
                         }}
                       >
                         Vision
@@ -409,7 +409,7 @@ export default function Home() {
                         className="text-base md:text-lg"
                         style={{ 
                           color: colors.gray,
-                          fontFamily: "'Nunito Sans', sans-serif"
+                          fontFamily: "'Montserrat', sans-serif"
                         }}
                       >
                         Be the trusted technology partner for businesses seeking meaningful, scalable solutions.
@@ -440,7 +440,7 @@ export default function Home() {
         className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center"
         style={{ 
           color: colors.light,
-          fontFamily: "'Manrope', sans-serif"
+          fontFamily: "'Montserrat', sans-serif"
         }}
       >
         Trusted Partners in Our Success
@@ -547,7 +547,7 @@ export default function Home() {
               className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center"
               style={{ 
                 color: colors.light,
-                fontFamily: "'Manrope', sans-serif"
+                fontFamily: "'Montserrat', sans-serif"
               }}
             >
               Why Choose Creative Pair
@@ -599,7 +599,7 @@ export default function Home() {
                       className="text-sm md:text-base"
                       style={{ 
                         color: colors.gray,
-                        fontFamily: "'Nunito Sans', sans-serif"
+                        fontFamily: "'Montserrat', sans-serif"
                       }}
                     >
                       {item.description}

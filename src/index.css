@@ -22,8 +22,8 @@
   --cp-grad-1: rgba(var(--cp-accent2-rgb),1); /* #465C88 */
   --cp-grad-2: rgba(var(--cp-accent-rgb),1); /* #FF7A30 */
   /* Typography */
-  --font-heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --font-body: 'Merriweather', Georgia, serif;
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
 }
 
 /* Dark theme variables mapped from the light palette to keep contrast */

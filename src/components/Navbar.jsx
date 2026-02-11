@@ -85,9 +85,10 @@ export default function Navbar() {
         style={{ color: colors.light, fontFamily: "'Manrope', sans-serif" }}
         onClick={() => setActiveTab("home")}
       >
+
         <div className="w-25 h-14 flex items-center justify-center mr-2 rounded-full p-1">
           <img
-            src="public/CP Logo2.png"
+            src="/CP Logo2.png"
             alt="CP"
             className="w-full h-full object-contain"
           />
