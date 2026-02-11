@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creative Pair</title>
+
+    <link rel="icon" href="/logo__2.png" type="image/png" sizes="32x32" />
+    <link rel="shortcut icon" href="/logo__2.png" type="image/png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://creativepair.site",
+        "logo": "https://creativepair.site/logo__2.png"
+      }
+    </script>
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-G2PCZQHBLB"
+    ></script>
+    <!-- Modern serif fonts: Cormorant Garamond (headings) + Merriweather (body) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700;800&family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-G2PCZQHBLB");
+    </script>
+  </head>
+
+  <body class="bg-brand-bg text-white">
+    <div id="root"></div>
+
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="Full Name" />
+      <input type="email" name="Email Address" />
+      <input type="text" name="Company Name" />
+      <input type="text" name="Subject" />
+      <textarea name="Message"></textarea>
+    </form>
+
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
