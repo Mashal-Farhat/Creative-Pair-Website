@@ -7,7 +7,7 @@ We partner with businesses to turn innovative ideas into **functional, beautiful
 
 ## 📚 Table of Contents
 
-- [About Us](#about-us)  
+- [About Us](#About)  
 - [Our Services](#our-services)  
 - [Our Approach](#our-our-approach)  
 - [Technologies](#technologies)  
