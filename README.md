@@ -30,11 +30,11 @@ Our mission is to empower businesses with **modern, scalable digital products** 
 
 ## 🛠️ Our Services
 
-- **🌐 Web Application Development:** Custom, scalable web apps built with the latest frameworks.  
+- **🌐 Web Development:** Custom, scalable web apps built with the latest frameworks.
+- **📱 Mobile App Development:** Robust, scalable mobile solutions developed with the latest cross-platform and native frameworks.
 - **🎨 UI/UX Design:** Engaging, intuitive designs that prioritize usability and aesthetics.  
 - **⚙️ Frontend & Backend Development:** Robust, maintainable code for web and mobile platforms.  
-- **📦 Branding & Digital Design:** Modern visual identity, responsive websites, and digital assets.  
-- **📊 Consulting & Strategy:** Guidance on digital transformation and growth-driven tech solutions.  
+- **📦 Branding & Digital Design:** Modern visual identity, responsive websites, and digital assets.   
 - **🛡️ Maintenance & Support:** Ongoing assistance to keep your products running smoothly.  
 
 ---
