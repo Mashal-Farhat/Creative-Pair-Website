@@ -3,41 +3,39 @@
 @tailwind utilities;
 
 :root {
-  /* Light mode palette (user provided):
-     #E9E3DF (background), #FF7A30 (accent1), #465C88 (accent2), #000000 (text)
-  */
-  --cp-bg: #E9E3DF;
+  /* Light mode palette */
+  --cp-bg: #B9BAA3;
   --cp-surface: rgba(255,255,255,0.9); /* gentle paper surface */
   --cp-surface-elev: rgba(255,255,255,0.98);
-  --cp-text: #000000;
-  --cp-accent: #FF7A30; /* primary accent */
-  --cp-accent2: #465C88; /* secondary accent */
+  --cp-text: #0A100D;
+  --cp-accent: #A22C29; /* primary accent */
+  --cp-accent2: #902923; /* secondary accent */
   --cp-muted: #6b7280; /* neutral muted */
   /* rgb helpers for translucent effects */
-  --cp-accent-rgb: 255,122,48;
-  --cp-accent2-rgb: 70,92,136;
-  --cp-text-rgb: 0,0,0;
+  --cp-accent-rgb: 162,44,41;
+  --cp-accent2-rgb: 144,41,35;
+  --cp-text-rgb: 10,16,13;
 
   /* gradient stops using accents (accent2 -> accent) for a warm-to-cool sweep */
-  --cp-grad-1: rgba(var(--cp-accent2-rgb),1); /* #465C88 */
-  --cp-grad-2: rgba(var(--cp-accent-rgb),1); /* #FF7A30 */
+  --cp-grad-1: rgba(var(--cp-accent2-rgb),1); /* #902923 */
+  --cp-grad-2: rgba(var(--cp-accent-rgb),1); /* #A22C29 */
   /* Typography */
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Montserrat', sans-serif;
 }
 
-/* Dark theme variables mapped from the light palette to keep contrast */
+/* Dark theme variables */
 .dark {
-  --cp-bg: linear-gradient(180deg, #06070a 0%, #0f1216 100%); /* subtle deep gradient */
+  --cp-bg: #0A100D;
   --cp-surface: rgba(18,20,24,0.6); /* translucent surface for depth */
   --cp-surface-elev: rgba(18,20,24,0.85);
-  --cp-text: #E9E3DF; /* light text uses the light bg color */
-  --cp-accent: #FF914D; /* slightly brighter in dark */
-  --cp-accent2: #7DA0D9; /* softened secondary */
+  --cp-text: #B9BAA3;
+  --cp-accent: #A22C29;
+  --cp-accent2: #902923;
   --cp-muted: #9aa3b2;
-  --cp-accent-rgb: 255,145,77;
-  --cp-accent2-rgb: 125,160,217;
-  --cp-text-rgb: 233,227,223; /* E9E3DF in rgb for dark-mode text */
+  --cp-accent-rgb: 162,44,41;
+  --cp-accent2-rgb: 144,41,35;
+  --cp-text-rgb: 185,186,163;
   --cp-grad-1: rgba(var(--cp-accent-rgb),1);
   --cp-grad-2: rgba(var(--cp-accent2-rgb),1);
 }

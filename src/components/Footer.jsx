@@ -7,6 +7,7 @@ import {
   FaPhoneAlt,
   FaRegEnvelope,
 } from "react-icons/fa";
+import useTheme from "../hooks/useTheme";
 
 const Footer = () => {
   const navLinks = [
@@ -17,13 +18,23 @@ const Footer = () => {
     { name: "Contact", path: "/Contact" },
   ];
 
-  const colors = {
+  const isDark = useTheme();
+
+  // Color palette - dynamically changes based on theme
+  const colors = isDark ? {
     dark: "#0A100D",
     light: "#B9BAA3",
     gray: "#D6D5C9",
     accent1: "#A22C29",
     accent2: "#902923",
-    accent3: "#4a2523",
+    accent3: "#4a2523"
+  } : {
+    dark: "#B9BAA3",
+    light: "#0A100D",
+    gray: "#6b7280",
+    accent1: "#A22C29",
+    accent2: "#902923",
+    accent3: "#D6D5C9"
   };
 
   return (

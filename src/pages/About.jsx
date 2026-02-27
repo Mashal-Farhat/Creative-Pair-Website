@@ -2,18 +2,27 @@ import { motion } from "framer-motion";
 import { Lightbulb, Target, Users, Zap, Globe, Award, Heart, Sparkles, Code, Shield, Clock, Handshake, BookOpen, Rocket } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import Typewriter from "../components/Typewriter";
+import useTheme from "../hooks/useTheme";
 
 export default function About() {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const isDark = useTheme();
 
-  // Color palette
-  const colors = {
+  // Color palette - dynamically changes based on theme
+  const colors = isDark ? {
     dark: "#0A100D",
     light: "#B9BAA3",
     gray: "#D6D5C9",
     accent1: "#A22C29",
     accent2: "#902923",
     accent3: "#4a2523"
+  } : {
+    dark: "#B9BAA3",
+    light: "#0A100D",
+    gray: "#6b7280",
+    accent1: "#A22C29",
+    accent2: "#902923",
+    accent3: "#D6D5C9"
   };
 
   const containerVariants = {

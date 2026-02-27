@@ -1,21 +1,30 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX, Sparkles, Target, Eye, Users, Code, Shield, Zap } from "lucide-react";
+import useTheme from "../hooks/useTheme";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("design");
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const videoRef = useRef(null);
+  const isDark = useTheme();
 
-  // Color palette
-  const colors = {
+  // Color palette - dynamically changes based on theme
+  const colors = isDark ? {
     dark: "#0A100D",
     light: "#B9BAA3",
     gray: "#D6D5C9",
     accent1: "#A22C29",
     accent2: "#902923",
     accent3: "#4a2523"
+  } : {
+    dark: "#B9BAA3",
+    light: "#0A100D",
+    gray: "#6b7280",
+    accent1: "#A22C29",
+    accent2: "#902923",
+    accent3: "#D6D5C9"
   };
 
   // Video sources for each tab
