@@ -21,6 +21,13 @@ export default function DesignProjects() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
+    // Get accent colors from CSS variables
+    const rootStyles = getComputedStyle(document.documentElement);
+    const isDark = document.documentElement.classList.contains('dark');
+    
+    // Use appropriate accent based on theme
+    const accentRgb = isDark ? '144,41,35' : '151,62,52'; // #902923 (dark) or #973e34 (light)
+    
     const particles = [];
     const particleCount = 60;
 
@@ -31,7 +38,8 @@ export default function DesignProjects() {
         this.size = Math.random() * 2 + 1;
         this.speedX = Math.random() * 0.6 - 0.3;
         this.speedY = Math.random() * 0.6 - 0.3;
-        this.color = `rgba(255, 255, 255, ${Math.random() * 0.3})`;
+        const alpha = Math.random() * 0.2;
+        this.color = `rgba(${accentRgb}, ${alpha})`;
       }
       update() {
         this.x += this.speedX;
@@ -61,9 +69,26 @@ export default function DesignProjects() {
     };
     animate();
 
+    // Observe theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          const newIsDark = document.documentElement.classList.contains('dark');
+          const newAccentRgb = newIsDark ? '144,41,35' : '151,62,52';
+          particles.forEach(p => {
+            const alpha = parseFloat(p.color.split(',')[3]?.split(')')[0] || '0.1');
+            p.color = `rgba(${newAccentRgb}, ${alpha})`;
+          });
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", resizeCanvas);
+      observer.disconnect();
     };
   }, []);
 
@@ -71,21 +96,17 @@ export default function DesignProjects() {
     {
       id: 1,
       title: "UI Designs",
-      gradient: "from-green-400 to-teal-500",
-      hoverColor: "hover:shadow-green-500/40",
       path: "/projects/design/ui",
     },
     {
       id: 2,
       title: "Graphic Designs",
-      gradient: "from-pink-500 to-purple-600",
-      hoverColor: "hover:shadow-pink-500/40",
       path: "/projects/design/graphic",
     },
   ];
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
+    <div className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden bg-brand-dark text-white">
       {/* Particle background */}
       <canvas
         ref={canvasRef}
@@ -99,16 +120,18 @@ export default function DesignProjects() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full" style={{ background: 'rgba(69,92,136,0.06)', border: '1px solid rgba(69,92,136,0.08)' }}>
-            <Sparkles className="w-4 h-4 text-accent2" />
-            <span className="text-accent2 text-sm font-medium">Explore Designs</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full border-brand-primary bg-white/5">
+            <Sparkles className="w-4 h-4 text-accent" />
+            <span className="text-accent text-sm font-medium">Explore Designs</span>
           </div>
+          
           <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
             Choose Your{" "}
             <span className="text-gradient">Design Category</span>
           </h1>
+          
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Whether it’s modern UI layouts or creative graphics, explore our
+            Whether it's modern UI layouts or creative graphics, explore our
             curated design showcases.
           </p>
         </motion.div>
@@ -137,17 +160,24 @@ export default function DesignProjects() {
             whileHover={{ y: -12, scale: 1.05 }}
             transition={{ duration: 0.3 }}
             onClick={() => navigate(design.path)}
-            className={`relative bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 
-              w-72 h-40 flex items-center justify-center text-xl font-bold cursor-pointer
-              shadow-lg transition-all duration-500 ${design.hoverColor}`}
+            className="relative bg-brand-card backdrop-blur-md rounded-3xl p-8 border border-white/10 w-72 h-40 flex items-center justify-center text-xl font-bold cursor-pointer shadow-lg transition-all duration-500 hover:shadow-glow"
           >
-            <div
-              className={`absolute inset-0 bg-gradient-to-br ${design.gradient} opacity-0 hover:opacity-20 transition-opacity duration-500 rounded-3xl`}
-            ></div>
-            {design.title}
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/0 to-accent/0 opacity-0 hover:opacity-20 transition-opacity duration-500 rounded-3xl"
+              style={{
+                background: 'linear-gradient(135deg, var(--cp-accent) 0%, transparent 100%)'
+              }}
+            />
+            <span className="text-white font-heading">{design.title}</span>
           </motion.div>
         ))}
       </motion.section>
+
+      {/* Add custom style for glow effect */}
+      <style jsx>{`
+        .hover\\:shadow-glow:hover {
+          box-shadow: 0 0 30px var(--cp-glow);
+        }
+      `}</style>
     </div>
   );
 }

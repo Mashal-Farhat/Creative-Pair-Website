@@ -10,17 +10,17 @@ export default function Home() {
   const videoRef = useRef(null);
   const isDark = useTheme();
 
-  // Color palette - dynamically changes based on theme
+  // Color palette 
   const colors = isDark ? {
     dark: "#0A100D",
     light: "#B9BAA3",
     accent2: "#902923",
     accent3: "#4a2523"
   } : {
-    dark: "#FDF8F2",      // Warm off-white background
+    dark: "#FDF8F2", 
     light: "#0A100D",     
-    accent2: "#973e34",   // Deeper rust
-    accent3: "#F0E6D8"    // Warm beige
+    accent2: "#973e34", 
+    accent3: "#F0E6D8"    
   };
 
   // Video sources for each tab

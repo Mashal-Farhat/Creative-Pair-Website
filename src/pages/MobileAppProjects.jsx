@@ -6,16 +6,6 @@ export default function MobileAppProjects() {
     const [hoveredCard, setHoveredCard] = useState(null);
     const canvasRef = useRef(null);
 
-    // Color palette - matching Home page
-    const colors = {
-        dark: "#0A100D",
-        light: "#B9BAA3",
-        gray: "#D6D5C9",
-        accent1: "#A22C29",
-        accent2: "#902923",
-        accent3: "#4a2523"
-    };
-
     // Particle Background Effect
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -30,6 +20,11 @@ export default function MobileAppProjects() {
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
 
+        // Get accent color from CSS variable
+        const rootStyles = getComputedStyle(document.documentElement);
+        const isDark = document.documentElement.classList.contains('dark');
+        const accentRgb = isDark ? '144,41,35' : '151,62,52'; // #902923 (dark) or #973e34 (light)
+
         const particles = [];
         const particleCount = 50;
 
@@ -40,7 +35,8 @@ export default function MobileAppProjects() {
                 this.size = Math.random() * 2 + 0.5;
                 this.speedX = Math.random() * 0.5 - 0.25;
                 this.speedY = Math.random() * 0.5 - 0.25;
-                this.color = `rgba(162, 44, 41, ${Math.random() * 0.3})`;
+                const alpha = Math.random() * 0.3;
+                this.color = `rgba(${accentRgb}, ${alpha})`;
             }
             update() {
                 this.x += this.speedX;
@@ -68,9 +64,27 @@ export default function MobileAppProjects() {
         };
 
         animate();
+
+        // Observe theme changes
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    const newIsDark = document.documentElement.classList.contains('dark');
+                    const newAccentRgb = newIsDark ? '144,41,35' : '151,62,52';
+                    particles.forEach(p => {
+                        const alpha = parseFloat(p.color.split(',')[3]?.split(')')[0] || '0.1');
+                        p.color = `rgba(${newAccentRgb}, ${alpha})`;
+                    });
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, { attributes: true });
+
         return () => {
             cancelAnimationFrame(animationFrameId);
             window.removeEventListener("resize", resizeCanvas);
+            observer.disconnect();
         };
     }, []);
 
@@ -81,8 +95,6 @@ export default function MobileAppProjects() {
             title: "Lingo Fusion",
             description: "Language learning app with realtime sync and auth.",
             technologies: ["Flutter", "Dart", "Firebase"],
-            gradient: "from-[#A22C29] to-[#902923]",
-            hoverColor: "hover:shadow-[#A22C29]/30",
         },
         {
             id: 2,
@@ -90,8 +102,6 @@ export default function MobileAppProjects() {
             title: "Care Without Fear",
             description: "Digitalizing health and child care with enhanced security feature, auth and secure payments.",
             technologies: ["Java", "Node.js", "Firebase", "XML"],
-            gradient: "from-[#A22C29] to-[#902923]",
-            hoverColor: "hover:shadow-[#A22C29]/30",
         },
         {
             id: 3,
@@ -99,8 +109,6 @@ export default function MobileAppProjects() {
             title: "Buzzly",
             description: "Your daily notes, reminder buddy.",
             technologies: ["Flutter", "Dart", "Firebase"],
-            gradient: "from-[#A22C29] to-[#902923]",
-            hoverColor: "hover:shadow-[#A22C29]/30",
         },
         {
             id: 4,
@@ -108,13 +116,11 @@ export default function MobileAppProjects() {
             title: "Budget Buddy",
             description: "Personal finance tracker for smart budgeting.",
             technologies: ["Kotlin", "XML", "Firebase"],
-            gradient: "from-[#A22C29] to-[#902923]",
-            hoverColor: "hover:shadow-[#A22C29]/30",
         },
     ];
 
     return (
-        <div className="min-h-screen overflow-hidden relative" style={{ backgroundColor: colors.dark, fontFamily: "'Montserrat', sans-serif" }}>
+        <div className="min-h-screen overflow-hidden relative bg-brand-dark text-white font-body">
             {/* Particle Background */}
             <canvas
                 ref={canvasRef}
@@ -128,20 +134,21 @@ export default function MobileAppProjects() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full" style={{ background: `${colors.accent1}20`, border: `1px solid ${colors.accent1}30` }}>
-                        <Sparkles className="w-4 h-4" style={{ color: colors.accent1 }} />
-                        <span className="text-sm font-medium" style={{ color: colors.light, fontFamily: "'Montserrat', sans-serif" }}>Mobile Apps</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full border-brand-primary bg-white/5">
+                        <Sparkles className="w-4 h-4 text-accent" />
+                        <span className="text-accent text-sm font-medium font-heading">Mobile Apps</span>
                     </div>
+                    
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
-                        className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
-                        style={{ color: colors.light, fontFamily: "'Montserrat', sans-serif" }}
+                        className="text-4xl md:text-5xl font-bold mb-6 leading-tight font-heading"
                     >
-                        Our <span style={{ color: colors.accent1 }}>Mobile Projects</span>
+                        Our <span className="text-accent">Mobile Projects</span>
                     </motion.h1>
-                    <p className="text-lg max-w-2xl mx-auto" style={{ color: colors.gray, fontFamily: "'Montserrat', sans-serif" }}>
+                    
+                    <p className="text-lg max-w-2xl mx-auto text-gray-400 font-body">
                         Cross-platform and native apps built with modern stacks.
                     </p>
                 </motion.div>
@@ -159,44 +166,46 @@ export default function MobileAppProjects() {
                         whileHover={{ y: -15, scale: 1.02 }}
                         onHoverStart={() => setHoveredCard(project.id)}
                         onHoverEnd={() => setHoveredCard(null)}
-                        className={`relative rounded-3xl p-10 overflow-hidden transition-all duration-500 cursor-default group ${project.hoverColor} ${hoveredCard && hoveredCard !== project.id ? "opacity-70" : "opacity-100"}`}
+                        className={`relative rounded-3xl p-10 overflow-hidden transition-all duration-500 cursor-default group bg-brand-card border border-white/10 ${
+                            hoveredCard && hoveredCard !== project.id ? "opacity-70" : "opacity-100"
+                        }`}
                         style={{
-                            backgroundColor: `${colors.dark}80`,
-                            border: `1px solid ${colors.gray}10`,
-                            boxShadow: `0 10px 40px rgba(0,0,0,0.3)`
+                            boxShadow: '0 10px 40px rgba(0,0,0,0.3)'
                         }}
                     >
                         {/* Gradient overlay */}
-                        <div
-                            className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-15 transition-opacity duration-500 rounded-3xl`}
-                        ></div>
+                        <div 
+                            className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-3xl"
+                            style={{ 
+                                background: 'linear-gradient(135deg, var(--cp-accent) 0%, var(--cp-accent2) 100%)'
+                            }}
+                        />
 
                         {/* Icon Container - Whole card image */}
                         <div
-                            className={`w-full h-64 rounded-2xl bg-gradient-to-r ${project.gradient} shadow-2xl mb-6 flex items-center justify-center overflow-hidden`}
+                            className="w-full h-64 rounded-2xl bg-gradient-to-r from-accent to-accent2 shadow-2xl mb-6 flex items-center justify-center overflow-hidden"
                             style={{
-                                boxShadow: `0 8px 32px ${colors.accent1}40`
+                                boxShadow: '0 8px 32px var(--cp-glow)'
                             }}
                         >
                             {project.icon}
                         </div>
 
-                        {/* Content - Reduced font sizes */}
-                        <h3 className="text-xl font-bold mb-2" style={{ color: colors.light, fontFamily: "'Montserrat', sans-serif" }}>{project.title}</h3>
-                        <p className="text-sm mb-5 leading-relaxed" style={{ color: colors.gray, fontFamily: "'Montserrat', sans-serif" }}>{project.description}</p>
+                        {/* Content */}
+                        <h3 className="text-xl font-bold mb-2 font-heading text-white">
+                            {project.title}
+                        </h3>
+                        
+                        <p className="text-sm mb-5 leading-relaxed text-gray-400 font-body">
+                            {project.description}
+                        </p>
 
-                        {/* Technologies - Modern tags */}
+                        {/* Technologies */}
                         <div className="flex flex-wrap gap-3">
                             {project.technologies.map((tech, index) => (
                                 <span
                                     key={index}
-                                    className="px-4 py-2 text-sm rounded-full font-medium transition-all duration-300 hover:scale-105"
-                                    style={{
-                                        backgroundColor: `${colors.accent1}20`,
-                                        color: colors.light,
-                                        border: `1px solid ${colors.accent1}40`,
-                                        fontFamily: "'Montserrat', sans-serif"
-                                    }}
+                                    className="px-4 py-2 text-sm rounded-full font-medium transition-all duration-300 hover:scale-105 bg-accent/20 text-white border border-accent/40 font-body"
                                 >
                                     {tech}
                                 </span>
@@ -205,12 +214,6 @@ export default function MobileAppProjects() {
                     </motion.div>
                 ))}
             </motion.section>
-
-            {/* Font imports */}
-            <style jsx global>{`
-                @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
-            `}</style>
         </div>
     )
 }
-

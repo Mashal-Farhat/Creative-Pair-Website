@@ -2,28 +2,9 @@ import { motion } from "framer-motion";
 import { Lightbulb, Target, Users, Zap, Globe, Award, Heart, Sparkles, Code, Shield, Clock, Handshake, BookOpen, Rocket } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import Typewriter from "../components/Typewriter";
-import useTheme from "../hooks/useTheme";
 
 export default function About() {
   const [hoveredCard, setHoveredCard] = useState(null);
-  const isDark = useTheme();
-
-  // Color palette - dynamically changes based on theme
-  const colors = isDark ? {
-    dark: "#0A100D",
-    light: "#B9BAA3",
-    gray: "#D6D5C9",
-    accent1: "#A22C29",
-    accent2: "#902923",
-    accent3: "#4a2523"
-  } : {
-    dark: "#B9BAA3",
-    light: "#0A100D",
-    gray: "#6b7280",
-    accent1: "#A22C29",
-    accent2: "#902923",
-    accent3: "#D6D5C9"
-  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -48,27 +29,11 @@ export default function About() {
   };
 
   return (
-    <div 
-      className="min-h-screen overflow-hidden"
-      style={{ 
-        backgroundColor: colors.dark,
-        color: colors.light,
-       fontFamily: "'Montserrat', sans-serif"
-      }}
-    >
+    <div className="min-h-screen overflow-hidden bg-brand-dark text-white font-body">
       {/* Background Elements */}
-      <div 
-        className="absolute top-0 left-0 w-full h-64"
-        style={{ background: `linear-gradient(180deg, ${colors.accent1}10, transparent)` }}
-      />
-      <div 
-        className="absolute top-1/4 right-0 w-80 h-80 rounded-full blur-3xl"
-        style={{ backgroundColor: colors.accent2, opacity: 0.06 }}
-      />
-      <div 
-        className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-3xl"
-        style={{ backgroundColor: colors.accent1, opacity: 0.06 }}
-      />
+      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-accent/10 to-transparent" />
+      <div className="absolute top-1/4 right-0 w-80 h-80 rounded-full blur-3xl bg-accent/6" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-3xl bg-accent/6" />
 
       {/* Hero Section */}
       <motion.section
@@ -78,53 +43,24 @@ export default function About() {
         className="relative py-16 md:py-20 overflow-hidden"
       >
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-10"
+          className="absolute inset-0 bg-cover bg-center opacity-20"
           style={{
             backgroundImage: 'url(https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80)',
           }}
         />
         
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          <motion.div
-            variants={itemVariants}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full"
-            style={{ 
-              backgroundColor: `${colors.accent1}20`,
-              border: `1px solid ${colors.accent1}40`,
-            }}
-            whileHover={{ scale: 1.05 }}
-          >
-            <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <Sparkles className="w-4 h-4" style={{ color: colors.accent1 }} />
-            </motion.div>
-            <span className="text-sm font-medium" style={{ color: colors.accent1 }}>
-              Where creation meets innovation
-            </span>
-          </motion.div>
-
           <motion.h2
             variants={itemVariants}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-            style={{fontFamily: "'Montserrat', sans-serif" }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight font-heading"
           >
             About{" "}
-            <span style={{ color: colors.accent1 }}>Creative Pair</span>
+            <span className="text-accent">Creative Pair</span>
           </motion.h2>
           
           <motion.p
             variants={itemVariants}
-            className="text-lg md:text-xl max-w-3xl mx-auto mb-8"
-            style={{ 
-              color: colors.gray,
-              fontFamily: "'Montserrat', sans-serif"
-            }}
+            className="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-gray-400 font-body"
           >
             A software house built on the belief that technology should be purposeful, reliable, 
             and designed to create long-term value.
@@ -150,12 +86,7 @@ export default function About() {
                 transition: { duration: 0.3 },
               }}
             >
-              <div 
-                className="rounded-3xl overflow-hidden shadow-2xl"
-                style={{ 
-                  border: `1px solid ${colors.gray}20`
-                }}
-              >
+              <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/10">
                 <div 
                   className="w-full h-80 md:h-96 bg-cover bg-center"
                   style={{ 
@@ -164,84 +95,43 @@ export default function About() {
                   }}
                 />
               </div>
-              <div 
-                className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: colors.accent2 }}
-              >
-                <Users className="w-12 h-12" style={{ color: colors.light }} />
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full flex items-center justify-center bg-accent">
+                <Users className="w-12 h-12 text-white" />
               </div>
             </motion.div>
 
             {/* Right Side - Content */}
             <motion.div variants={itemVariants} className="space-y-6">
-              <h3 
-                className="text-3xl md:text-4xl font-bold"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
+              <h3 className="text-3xl md:text-4xl font-bold font-heading text-white">
                 Our Story
               </h3>
               
-              <p 
-                className="text-lg leading-relaxed"
-                style={{ 
-                  color: colors.gray,
-                 fontFamily: "'Montserrat', sans-serif"
-                }}
-              >
-                Founded by <span className="font-bold" style={{ color: colors.light }}>Mashal</span> and{" "}
-                <span className="font-bold" style={{ color: colors.light }}>Ammal</span> with a shared passion 
+              <p className="text-lg leading-relaxed text-gray-400 font-body">
+                Founded by <span className="font-bold text-white">Mashal</span> and{" "}
+                <span className="font-bold text-white">Ammal</span> with a shared passion 
                 for technology and independent thinking, Creative Pair was created to move beyond conventional 
                 career paths and transactional development.
               </p>
               
-              <p 
-                className="text-lg leading-relaxed"
-                style={{ 
-                  color: colors.gray,
-                  fontFamily: "'Montserrat', sans-serif"
-                }}
-              >
+              <p className="text-lg leading-relaxed text-gray-400 font-body">
                 What began as a vision to build meaningful software has grown into a company focused on 
                 ownership, craftsmanship, and thoughtful execution.
               </p>
               
               <div className="flex items-center gap-4 pt-4">
                 <div className="flex -space-x-3">
-                  <div 
-                    className="w-12 h-12 rounded-full border-2 flex items-center justify-center"
-                    style={{ 
-                      backgroundColor: colors.dark,
-                      borderColor: colors.accent1,
-                      color: colors.light
-                    }}
-                  >
+                  <div className="w-12 h-12 rounded-full border-2 flex items-center justify-center bg-brand-dark border-accent text-white">
                     M
                   </div>
-                  <div 
-                    className="w-12 h-12 rounded-full border-2 flex items-center justify-center"
-                    style={{ 
-                      backgroundColor: colors.dark,
-                      borderColor: colors.accent1,
-                      color: colors.light
-                    }}
-                  >
+                  <div className="w-12 h-12 rounded-full border-2 flex items-center justify-center bg-brand-dark border-accent text-white">
                     A
                   </div>
                 </div>
                 <div>
-                  <h4 
-                    className="font-bold"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
+                  <h4 className="font-bold font-heading text-white">
                     Mashal & Ammal
                   </h4>
-                  <p 
-                    className="text-sm"
-                    style={{ 
-                      color: colors.gray,
-                    fontFamily: "'Montserrat', sans-serif"
-                    }}
-                  >
+                  <p className="text-sm text-gray-400 font-body">
                     Co-Founders, Creative Pair
                   </p>
                 </div>
@@ -260,19 +150,10 @@ export default function About() {
       >
         <div className="max-w-6xl mx-auto">
           <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-4"
-              style={{fontFamily: "'Montserrat', sans-serif"}}
-            >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-heading text-white">
               Our Philosophy
             </h2>
-            <p 
-              className="text-lg max-w-3xl mx-auto"
-              style={{ 
-                color: colors.gray,
-               fontFamily: "'Montserrat', sans-serif"
-              }}
-            >
+            <p className="text-lg max-w-3xl mx-auto text-gray-400 font-body">
               We approach every project as a technology partner rather than a vendor.
             </p>
           </motion.div>
@@ -305,35 +186,18 @@ export default function About() {
                 variants={itemVariants}
                 whileHover={{
                   y: -8,
-                  boxShadow: `0 10px 30px ${colors.accent1}20`,
+                  boxShadow: '0 10px 30px var(--cp-glow)',
                   transition: { duration: 0.3 },
                 }}
-                className="rounded-2xl p-6 text-center"
-                style={{ 
-                  backgroundColor: `${colors.dark}80`,
-                  border: `1px solid ${colors.gray}20`,
-                  backdropFilter: 'blur(8px)'
-                }}
+                className="rounded-2xl p-6 text-center bg-brand-card border border-white/10"
               >
-                <div 
-                  className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-                  style={{ backgroundColor: colors.accent1, color: colors.light }}
-                >
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-accent text-white">
                   {item.icon}
                 </div>
-                <h4 
-                  className="text-xl font-bold mb-2"
-                  style={{fontFamily: "'Montserrat', sans-serif" }}
-                >
+                <h4 className="text-xl font-bold mb-2 font-heading text-white">
                   {item.title}
                 </h4>
-                <p 
-                  className="text-sm"
-                  style={{ 
-                    color: colors.gray,
-                    fontFamily: "'Montserrat', sans-serif"
-                  }}
-                >
+                <p className="text-sm text-gray-400 font-body">
                   {item.description}
                 </p>
               </motion.div>
@@ -351,10 +215,7 @@ export default function About() {
       >
         <div className="max-w-6xl mx-auto">
           <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif"}}
-            >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-heading text-white">
               What Sets Us Apart
             </h2>
           </motion.div>
@@ -362,34 +223,20 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <motion.div
               variants={itemVariants}
-              className="rounded-3xl p-8"
-              style={{ 
-                backgroundColor: colors.accent3,
-                backgroundImage: `linear-gradient(135deg, ${colors.accent1}10 0%, ${colors.accent3} 100%)`,
-                border: `1px solid ${colors.accent2}`
+              className="rounded-3xl p-8 bg-brand-card border border-accent/30"
+              style={{
+                backgroundImage: 'linear-gradient(135deg, var(--cp-accent) 0%, var(--cp-accent2) 100%)',
               }}
             >
               <div className="flex items-start gap-4 mb-6">
-                <div 
-                  className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: colors.accent2, color: colors.light }}
-                >
+                <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 bg-white/20 text-white">
                   <Rocket className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 
-                    className="text-2xl font-bold mb-2"
-                    style={{fontFamily: "'Montserrat', sans-serif"}}
-                  >
+                  <h3 className="text-2xl font-bold mb-2 font-heading text-white">
                     Founder-Led Execution
                   </h3>
-                  <p 
-                    className="text-base"
-                    style={{ 
-                      color: colors.gray,
-                     fontFamily: "'Montserrat', sans-serif"
-                    }}
-                  >
+                  <p className="text-base text-white/90 font-body">
                     Direct involvement from founders ensures quality, ownership, and thoughtful 
                     execution on every project. We believe the best results come from clarity, 
                     trust, and shared ownership of success.
@@ -400,34 +247,17 @@ export default function About() {
 
             <motion.div
               variants={itemVariants}
-              className="rounded-3xl p-8"
-              style={{ 
-                backgroundColor: `${colors.dark}80`,
-                border: `1px solid ${colors.gray}20`,
-                backdropFilter: 'blur(8px)'
-              }}
+              className="rounded-3xl p-8 bg-brand-card border border-white/10"
             >
               <div className="flex items-start gap-4 mb-6">
-                <div 
-                  className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: colors.accent1, color: colors.light }}
-                >
+                <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 bg-accent text-white">
                   <BookOpen className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 
-                    className="text-2xl font-bold mb-2"
-                    style={{fontFamily: "'Montserrat', sans-serif" }}
-                  >
+                  <h3 className="text-2xl font-bold mb-2 font-heading text-white">
                     Full-Service Expertise
                   </h3>
-                  <p 
-                    className="text-base"
-                    style={{ 
-                      color: colors.gray,
-                      fontFamily: "'Montserrat', sans-serif"
-                    }}
-                  >
+                  <p className="text-base text-gray-400 font-body">
                     We specialize in custom software development, web and application engineering, 
                     scalable systems, and technical consulting. From early-stage concepts to mature 
                     platforms, we transform ideas into dependable digital products.
@@ -448,19 +278,10 @@ export default function About() {
       >
         <div className="max-w-7xl mx-auto">
           <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 
-              className="text-3xl md:text-4xl font-bold mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-heading text-white">
               Our Core Values
             </h2>
-            <p 
-              className="text-lg max-w-3xl mx-auto"
-              style={{ 
-                color: colors.gray,
-                fontFamily: "'Montserrat', sans-serif"
-              }}
-            >
+            <p className="text-lg max-w-3xl mx-auto text-gray-400 font-body">
               Built for the long run, we continue to evolve alongside technology.
             </p>
           </motion.div>
@@ -508,36 +329,19 @@ export default function About() {
                 }}
                 onHoverStart={() => setHoveredCard(index + 1)}
                 onHoverEnd={() => setHoveredCard(null)}
-                className={`p-6 rounded-2xl transition-all duration-500 ${
+                className={`p-6 rounded-2xl transition-all duration-500 bg-brand-card border border-white/10 ${
                   hoveredCard && hoveredCard !== index + 1 ? "opacity-70" : "opacity-100"
                 }`}
-                style={{ 
-                  backgroundColor: `${colors.dark}80`,
-                  border: `1px solid ${colors.gray}20`,
-                  backdropFilter: 'blur(8px)'
-                }}
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div 
-                    className="w-12 h-12 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: colors.accent1, color: colors.light }}
-                  >
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center bg-accent text-white">
                     {value.icon}
                   </div>
-                  <h3 
-                    className="text-xl font-bold"
-                    style={{ fontFamily: "'Montserrat', sans-serif"}}
-                  >
+                  <h3 className="text-xl font-bold font-heading text-white">
                     {value.title}
                   </h3>
                 </div>
-                <p 
-                  className="text-sm"
-                  style={{ 
-                    color: colors.gray,
-                    fontFamily: "'Montserrat', sans-serif"
-                  }}
-                >
+                <p className="text-sm text-gray-400 font-body">
                   {value.description}
                 </p>
               </motion.div>
@@ -556,42 +360,25 @@ export default function About() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { value: "50+", label: "Projects Delivered", color: colors.accent1 },
-              { value: "25+", label: "Happy Clients", color: colors.accent2 },
-              { value: "100%", label: "Client Satisfaction", color: colors.accent1 },
-              { value: "<24h", label: "Average Response", color: colors.accent2 },
+              { value: "50+", label: "Projects Delivered" },
+              { value: "25+", label: "Happy Clients" },
+              { value: "100%", label: "Client Satisfaction" },
+              { value: "<24h", label: "Average Response" },
             ].map((stat, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: `0 10px 20px ${colors.accent1}20`,
+                  boxShadow: '0 10px 20px var(--cp-glow)',
                   transition: { duration: 0.3 },
                 }}
-                className="p-6 rounded-2xl"
-                style={{ 
-                  backgroundColor: `${colors.dark}80`,
-                  border: `1px solid ${colors.gray}20`,
-                  backdropFilter: 'blur(8px)'
-                }}
+                className="p-6 rounded-2xl bg-brand-card border border-white/10"
               >
-                <p 
-                  className="text-3xl md:text-4xl font-bold mb-2"
-                  style={{ 
-                    color: stat.color,
-                    fontFamily: "'Montserrat', sans-serif"
-                  }}
-                >
+                <p className="text-3xl md:text-4xl font-bold mb-2 text-accent font-heading">
                   {stat.value}
                 </p>
-                <p 
-                  className="text-sm"
-                  style={{ 
-                    color: colors.gray,
-                    fontFamily: "'Montserrat', sans-serif"
-                  }}
-                >
+                <p className="text-sm text-gray-400 font-body">
                   {stat.label}
                 </p>
               </motion.div>

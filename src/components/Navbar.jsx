@@ -10,15 +10,15 @@ export default function Navbar() {
   const [activeTab, setActiveTab] = useState("home");
   const isDark = useTheme();
 
-  // Color palette - dynamically changes based on theme (matching homepage)
+  // Color palette 
   const colors = isDark ? {
-    dark: "#0A100D",      // Rich dark background
-    light: "#B9BAA3",     // Light text
-    accent2: "#902923",   // Deeper rust for hover states
+    dark: "#0A100D",      
+    light: "#B9BAA3",    
+    accent2: "#902923", 
   } : {
-    dark: "#FDF8F2",      // Warm off-white background
-    light: "#0A100D",     // Rich dark brown text
-    accent2: "#973e34",   // Deeper rust for hover states
+    dark: "#FDF8F2", 
+    light: "#0A100D",
+    accent2: "#973e34",
   };
 
   const navLinks = [

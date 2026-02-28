@@ -55,17 +55,15 @@ export default function UIDesign() {
   ];
 
   return (
-    <div className="relative min-h-screen px-6 py-16 overflow-hidden" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
+    <div className="relative min-h-screen px-6 py-16 overflow-hidden bg-brand-dark text-white">
       {/* === Glowing Gradient Orbs === */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full blur-3xl"
-        style={{ backgroundColor: 'var(--cp-accent2)', opacity: 0.12 }}
+        className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full blur-3xl bg-accent2/20"
         animate={{ scale: [1, 1.2, 1], opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 6, repeat: Infinity }}
       />
       <motion.div
-        className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full blur-3xl"
-        style={{ backgroundColor: 'var(--cp-accent)', opacity: 0.12 }}
+        className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full blur-3xl bg-accent/20"
         animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -74,10 +72,10 @@ export default function UIDesign() {
       {[...Array(20)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1.5 h-1.5 bg-white rounded-full opacity-30"
+          className="absolute w-1.5 h-1.5 bg-white/30 rounded-full"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
           }}
           animate={{
             y: [null, -50],
@@ -96,9 +94,9 @@ export default function UIDesign() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-4xl md:text-5xl font-bold text-center mb-12 relative z-10"
+        className="text-4xl md:text-5xl font-bold text-center mb-12 relative z-10 font-heading"
       >
-        <span className="bg-gradient-to-r from-green-400 to-teal-500 text-transparent bg-clip-text">
+        <span className="text-gradient">
           UI Designs
         </span>
       </motion.h1>
@@ -112,27 +110,27 @@ export default function UIDesign() {
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ y: -8, scale: 1.02 }}
-            className="group block cp-glass rounded-2xl p-6 hover:border-teal-400/40 transition-all duration-300"
+            className="group block bg-brand-card backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-accent/40 transition-all duration-300"
           >
-            <h3 className="text-xl font-bold mb-4 group-hover:text-teal-400 transition-colors">
+            <h3 className="text-xl font-bold mb-4 font-heading text-white group-hover:text-accent transition-colors">
               {project.title}
             </h3>
 
-            <p className="text-sm mb-2 cp-text-muted">Tools:</p>
+            <p className="text-sm mb-2 text-gray-400 font-body">Tools:</p>
             <ul className="flex flex-wrap gap-2 mb-4">
               {project.tools.map((tool, i) => (
-                <li key={i} className="bg-green-500/20 text-green-400 text-xs px-3 py-1 rounded-full">
+                <li key={i} className="bg-accent/20 text-accent text-xs px-3 py-1 rounded-full font-body">
                   {tool}
                 </li>
               ))}
             </ul>
 
-            <p className="text-sm text-gray-400 mb-2">Design Skills:</p>
+            <p className="text-sm text-gray-400 mb-2 font-body">Design Skills:</p>
             <ul className="flex flex-wrap gap-2">
               {project.skills.map((skill, i) => (
                 <li
                   key={i}
-                  className="bg-teal-500/20 text-teal-400 text-xs px-3 py-1 rounded-full"
+                  className="bg-accent2/20 text-accent2 text-xs px-3 py-1 rounded-full font-body"
                 >
                   {skill}
                 </li>
@@ -143,10 +141,10 @@ export default function UIDesign() {
             <motion.div
               initial={{ opacity: 0, x: -10 }}
               whileHover={{ opacity: 1, x: 0 }}
-              className="mt-4 flex items-center gap-2 text-teal-400 opacity-0 group-hover:opacity-100 transition-all"
+              className="mt-4 flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-all"
             >
               <ArrowUpRight className="w-4 h-4" />
-              <span className="text-sm">View Project</span>
+              <span className="text-sm font-body">View Project</span>
             </motion.div>
           </motion.a>
         ))}

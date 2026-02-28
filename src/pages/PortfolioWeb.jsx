@@ -6,7 +6,7 @@ export default function PortfolioWeb() {
     const [hoveredCard, setHoveredCard] = useState(null);
     const canvasRef = useRef(null);
 
-    // Particle Background Effect (same style as Projects page)
+    // Particle Background Effect
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -20,6 +20,11 @@ export default function PortfolioWeb() {
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
 
+        // Get accent color from CSS variable
+        const rootStyles = getComputedStyle(document.documentElement);
+        const isDark = document.documentElement.classList.contains('dark');
+        const accentRgb = isDark ? '144,41,35' : '151,62,52'; // #902923 (dark) or #973e34 (light)
+
         const particles = [];
         const particleCount = 50;
 
@@ -30,7 +35,8 @@ export default function PortfolioWeb() {
                 this.size = Math.random() * 2 + 0.5;
                 this.speedX = Math.random() * 0.5 - 0.25;
                 this.speedY = Math.random() * 0.5 - 0.25;
-                this.color = `rgba(70, 92, 136, ${Math.random() * 0.3})`;
+                const alpha = Math.random() * 0.3;
+                this.color = `rgba(${accentRgb}, ${alpha})`;
             }
             update() {
                 this.x += this.speedX;
@@ -58,41 +64,63 @@ export default function PortfolioWeb() {
         };
 
         animate();
+
+        // Observe theme changes
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    const newIsDark = document.documentElement.classList.contains('dark');
+                    const newAccentRgb = newIsDark ? '144,41,35' : '151,62,52';
+                    particles.forEach(p => {
+                        const alpha = parseFloat(p.color.split(',')[3]?.split(')')[0] || '0.1');
+                        p.color = `rgba(${newAccentRgb}, ${alpha})`;
+                    });
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, { attributes: true });
+
         return () => {
             cancelAnimationFrame(animationFrameId);
             window.removeEventListener("resize", resizeCanvas);
+            observer.disconnect();
         };
     }, []);
 
     const portfolios = [
         {
             id: 1,
-            icon: <Badge className="w-12 h-12" />,
+            icon: <Badge className="w-12 h-12 text-white" />,
             name: "Mashal Farhat",
             role: "Portfolio Website",
             description:
                 "A sleek, modern portfolio highlighting projects, skills, and achievements with smooth animations.",
             technologies: ["HTML", "CSS", "JavaScript"],
-            gradient: "from-blue-500 to-purple-600",
-            hoverColor: "hover:shadow-blue-500/20",
             url: "https://mashal-farhat.github.io/Mashal_Portfolio/",
         },
         {
             id: 2,
-            icon: <Badge className="w-12 h-12" />,
+            icon: <Badge className="w-12 h-12 text-white" />,
             name: "Ammal Raheem",
             role: "Portfolio Website",
             description:
                 "A polished personal site featuring case studies, interactive sections, and responsive design.",
             technologies: ["HTML", "CSS", "JavaScript"],
-            gradient: "from-pink-500 to-purple-500",
-            hoverColor: "hover:shadow-pink-500/20",
             url: "https://ammalr.github.io/Portfolio/",
         },
     ];
 
+    // Gradient classes for variety
+    const gradientClasses = [
+        "from-accent to-accent2",
+        "from-accent2 to-accent",
+        "from-accent/80 to-accent2/80",
+        "from-accent2/80 to-accent/80"
+    ];
+
     return (
-        <div className="min-h-screen overflow-hidden relative" style={{ background: 'var(--cp-bg)', color: 'var(--cp-text)' }}>
+        <div className="min-h-screen overflow-hidden relative bg-brand-dark text-white">
             {/* Particle Background */}
             <canvas
                 ref={canvasRef}
@@ -106,15 +134,16 @@ export default function PortfolioWeb() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full" style={{ background: 'rgba(69,92,136,0.06)', border: '1px solid rgba(69,92,136,0.08)' }}>
-                        <Sparkles className="w-4 h-4 text-accent2" />
-                        <span className="text-accent2 text-sm font-medium">Portfolio</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full border-brand-primary bg-white/5">
+                        <Sparkles className="w-4 h-4 text-accent" />
+                        <span className="text-accent text-sm font-medium">Portfolio</span>
                     </div>
+                    
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
-                        className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+                        className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight font-heading"
                     >
                         Personal <span className="text-gradient">Portfolios</span>
                     </motion.h1>
@@ -127,7 +156,7 @@ export default function PortfolioWeb() {
                 animate="visible"
                 className="relative px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto"
             >
-                {portfolios.map((pf) => (
+                {portfolios.map((pf, index) => (
                     <motion.div
                         key={pf.id}
                         whileHover={{ y: -15 }}
@@ -141,30 +170,43 @@ export default function PortfolioWeb() {
                                 window.open(pf.url, "_blank", "noopener,noreferrer");
                             }
                         }}
-                        className={`relative cp-glass rounded-3xl p-8 overflow-hidden transition-all duration-500 cursor-pointer group ${pf.hoverColor} ${hoveredCard && hoveredCard !== pf.id ? "opacity-70" : "opacity-100"}`}
+                        className={`relative bg-brand-card backdrop-blur-md rounded-3xl p-8 border border-white/10 overflow-hidden transition-all duration-500 cursor-pointer group ${
+                            hoveredCard && hoveredCard !== pf.id ? "opacity-70" : "opacity-100"
+                        }`}
                     >
                         {/* Gradient overlay */}
-                        <div
-                            className={`absolute inset-0 bg-gradient-to-br ${pf.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}
-                        ></div>
+                        <div 
+                            className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-3xl"
+                            style={{ 
+                                background: 'linear-gradient(135deg, var(--cp-accent) 0%, var(--cp-accent2) 100%)'
+                            }}
+                        />
 
                         {/* Icon */}
-                        <div
-                            className={`mx-auto mb-6 flex items-center justify-center 
-    w-24 h-24 rounded-2xl bg-gradient-to-r ${pf.gradient} shadow-lg`}
+                        <div 
+                            className={`mx-auto mb-6 flex items-center justify-center w-24 h-24 rounded-2xl shadow-lg bg-gradient-to-r ${gradientClasses[index % gradientClasses.length]}`}
                         >
                             {pf.icon}
                         </div>
 
-                        <h3 className="text-2xl font-bold mb-1">{pf.name}</h3>
-                        <p className="text-sm text-accent2 mb-4">{pf.role}</p>
-                        <p className="mb-6 leading-relaxed cp-text-muted">{pf.description}</p>
+                        <h3 className="text-2xl font-bold mb-1 font-heading text-white">
+                            {pf.name}
+                        </h3>
+                        
+                        <p className="text-sm text-accent mb-4 font-body">
+                            {pf.role}
+                        </p>
+                        
+                        <p className="mb-6 leading-relaxed text-gray-400 font-body">
+                            {pf.description}
+                        </p>
 
+                        {/* Technologies */}
                         <div className="flex flex-wrap gap-2">
-                            {pf.technologies.map((tech, index) => (
+                            {pf.technologies.map((tech, idx) => (
                                 <span
-                                    key={index}
-                                    className="px-3 py-1.5 bg-black/40 text-xs rounded-full text-gray-400 border border-white/5"
+                                    key={idx}
+                                    className="px-3 py-1.5 bg-white/5 text-xs rounded-full text-gray-300 border border-white/10 font-body"
                                 >
                                     {tech}
                                 </span>
