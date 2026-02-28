@@ -3,10 +3,23 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import useTheme from "../hooks/useTheme";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
+  const isDark = useTheme();
+
+  // Color palette - dynamically changes based on theme (matching homepage)
+  const colors = isDark ? {
+    dark: "#0A100D",      // Rich dark background
+    light: "#B9BAA3",     // Light text
+    accent2: "#902923",   // Deeper rust for hover states
+  } : {
+    dark: "#FDF8F2",      // Warm off-white background
+    light: "#0A100D",     // Rich dark brown text
+    accent2: "#973e34",   // Deeper rust for hover states
+  };
 
   const navLinks = [
     { id: "home", name: "Home", path: "/" },
@@ -15,15 +28,6 @@ export default function Navbar() {
     { id: "projects", name: "Projects", path: "/projects" },
     { id: "contact", name: "Contact", path: "/contact" },
   ];
-
-  // Color palette
-  const colors = {
-    dark: "#0A100D",
-    light: "#B9BAA3",
-    gray: "#D6D5C9",
-    accent1: "#A22C29",
-    accent2: "#902923"
-  };
 
   // Drawer animation variants
   const drawerVariants = {
@@ -69,10 +73,11 @@ export default function Navbar() {
     <motion.nav
       className="flex justify-between items-center px-5 py-2 sticky top-3 z-50 mx-3 rounded-3xl"
       style={{
-        backgroundColor: 'rgba(18, 19, 18, 0.66)',
-        boxShadow: '0 2px 10px rgba(10, 16, 13, 0.1)',
+        backgroundColor: isDark ? 'rgba(10, 16, 13, 0.66)' : 'rgba(253, 248, 242, 0.8)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: isDark ? '0 2px 10px rgba(10, 16, 13, 0.1)' : '0 2px 10px rgba(0, 0, 0, 0.05)',
         fontFamily: "'Montserrat', sans-serif",
-        border: `1px solid ${colors.light}`,
+        border: `1px solid ${isDark ? '#B9BAA3' : '#0A100D'}20`,
       }}
       initial={{ y: -80 }}
       animate={{ y: 0 }}
@@ -85,7 +90,6 @@ export default function Navbar() {
         style={{ color: colors.light, fontFamily: "'Manrope', sans-serif" }}
         onClick={() => setActiveTab("home")}
       >
-
         <div className="w-25 h-14 flex items-center justify-center mr-2 rounded-full p-1">
           <img
             src="/CP Logo2.png"
@@ -93,36 +97,32 @@ export default function Navbar() {
             className="w-full h-full object-contain"
           />
         </div>
-        <span style={{ fontFamily: "'Manrope', sans-serif" }}>
-          
-        </span>
       </Link>
 
       {/* Desktop Nav Links */}
       <div className="hidden md:flex items-center space-x-6">
-        <div className="flex gap-1 rounded-xl p-1">
+        <div 
+          className="flex gap-1 rounded-xl p-1"
+          style={{ 
+            backgroundColor: isDark ? `${colors.dark}80` : `${colors.light}10`,
+          }}
+        >
           {navLinks.map((link) => (
             <Link
               key={link.id}
               to={link.path}
-              className={`px-4 py-2 text-s font-medium rounded-lg transition-all duration-300 ${activeTab === link.id
-                  ? "text-white"
-                  : "hover:text-white"
-                }`}
-              style={{ 
-                fontFamily: "'Montserrat', sans-serif",
-                backgroundColor: activeTab === link.id ? colors.accent2 : "transparent",
-                color: activeTab === link.id ? colors.light : colors.gray
-              }}
+              className="no-underline"
               onClick={() => setActiveTab(link.id)}
             >
               <motion.div
-                whileHover={{ 
-                  scale: 1.05,
-                  backgroundColor: activeTab === link.id ? colors.accent2 : `${colors.accent1}20`
-                }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-4 py-2 rounded-lg"
+                className="px-4 py-2 text-xs font-medium rounded-lg transition-all duration-300"
+                style={{ 
+                  fontFamily: "'Montserrat', sans-serif",
+                  backgroundColor: activeTab === link.id ? colors.accent2 : "transparent",
+                  color: activeTab === link.id ? (isDark ? colors.light : "#FDF8F2") : (isDark ? colors.light : colors.light),
+                }}
               >
                 {link.name}
               </motion.div>
@@ -130,8 +130,7 @@ export default function Navbar() {
           ))}
         </div>
         
-        {/* Theme Toggle */}
-        <ThemeToggle />
+        
       </div>
 
       {/* Mobile Menu Button */}
@@ -139,8 +138,11 @@ export default function Navbar() {
         <ThemeToggle />
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="p-2 rounded-full transition-colors duration-300 hover:bg-white/20"
-          style={{ color: colors.dark }}
+          className="p-2 rounded-full transition-colors duration-300"
+          style={{ 
+            color: colors.light,
+            backgroundColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'
+          }}
         >
           {isOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -153,10 +155,10 @@ export default function Navbar() {
         animate={isOpen ? "open" : "closed"}
         variants={drawerVariants}
         style={{
-          backgroundColor: colors.light,
+          backgroundColor: isDark ? colors.light : colors.dark,
           borderTopLeftRadius: '20px',
           borderBottomLeftRadius: '20px',
-          boxShadow: '-4px 0 20px rgba(10, 16, 13, 0.15)',
+          boxShadow: isDark ? '-4px 0 20px rgba(0, 0, 0, 0.15)' : '-4px 0 20px rgba(0, 0, 0, 0.1)',
         }}
       >
         <div className="flex flex-col items-start p-6 space-y-4 mt-16">
@@ -176,8 +178,8 @@ export default function Navbar() {
                 to={link.path}
                 className="block px-4 py-2.5 rounded-lg font-medium transition-all duration-300 hover:shadow-md w-full"
                 style={{
-                  color: colors.dark,
-                  backgroundColor: activeTab === link.id ? colors.accent2 : 'rgba(255, 255, 255, 0.1)',
+                  color: isDark ? colors.dark : colors.light,
+                  backgroundColor: activeTab === link.id ? colors.accent2 : 'transparent',
                   fontFamily: "'Nunito Sans', sans-serif",
                   fontSize: '14px'
                 }}
@@ -193,7 +195,7 @@ export default function Navbar() {
       {isOpen && (
         <motion.div
           className="fixed inset-0 z-40 md:hidden"
-          style={{ backgroundColor: `${colors.dark}CC` }}
+          style={{ backgroundColor: isDark ? `${colors.dark}CC` : `${colors.light}CC` }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}
           exit={{ opacity: 0 }}

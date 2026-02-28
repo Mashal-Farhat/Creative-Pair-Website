@@ -14,17 +14,13 @@ export default function Home() {
   const colors = isDark ? {
     dark: "#0A100D",
     light: "#B9BAA3",
-    gray: "#D6D5C9",
-    accent1: "#A22C29",
     accent2: "#902923",
     accent3: "#4a2523"
   } : {
-    dark: "#B9BAA3",
-    light: "#0A100D",
-    gray: "#6b7280",
-    accent1: "#A22C29",
-    accent2: "#902923",
-    accent3: "#D6D5C9"
+    dark: "#FDF8F2",      // Warm off-white background
+    light: "#0A100D",     
+    accent2: "#973e34",   // Deeper rust
+    accent3: "#F0E6D8"    // Warm beige
   };
 
   // Video sources for each tab
@@ -127,7 +123,7 @@ export default function Home() {
               className="relative w-full h-full max-h-[85vh] overflow-hidden shadow-2xl"
               style={{ 
                 borderRadius: "2rem",
-                border: `1px solid ${colors.gray}20`
+                border: `1px solid ${isDark ? '#B9BAA3' : '#0A100D'}20`
               }}
             >
               <video
@@ -169,12 +165,13 @@ export default function Home() {
               >
                 <div className="flex items-center">
                   <div className="w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 flex items-center justify-center rounded-full mr-4 md:mr-5"
-                    style={{ backgroundColor: colors.gray }}
+                    style={{ backgroundColor: isDark ? '#B9BAA3' : '#F0E6D8' }}
                   >
                     <img
                       src="/CP Simple.png"
                       alt="Creative Pair Logo"
                       className="w-full h-full object-contain p-3"
+                      style={{ filter: isDark ? 'none' : 'none' }}
                     />
                   </div>
                 </div>
@@ -199,7 +196,7 @@ export default function Home() {
                   <br />
                   <span 
                     style={{ 
-                      color: colors.accent1,
+                      color: isDark ? '#902923' : '#973e34',
                       fontFamily: "'Montserrat', sans-serif",
                       fontWeight: 700
                     }}
@@ -210,7 +207,7 @@ export default function Home() {
                 <p 
                   className="text-lg mb-6 max-w-xl mx-auto lg:mx-0"
                   style={{ 
-                    color: colors.gray,
+                    color: isDark ? '#B9BAA3' : '#0A100D',
                     fontFamily: "'Montserrat', sans-serif"
                   }}
                 >
@@ -224,7 +221,7 @@ export default function Home() {
                       whileTap={{ scale: 0.95 }}
                       className="px-6 py-3 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
                       style={{ 
-                        backgroundColor: colors.accent1,
+                        backgroundColor: isDark ? '#902923' : '#973e34',
                         fontFamily: "'Montserrat', sans-serif"
                       }}
                     >
@@ -239,9 +236,9 @@ export default function Home() {
                       whileTap={{ scale: 0.95 }}
                       className="px-6 py-3 font-semibold rounded-full hover:shadow-xl transition-all duration-300"
                       style={{ 
-                        backgroundColor: `${colors.gray}20`,
+                        backgroundColor: isDark ? '#4a252320' : '#0A100D10',
                         color: colors.light,
-                        border: `1px solid ${colors.gray}40`,
+                        border: `1px solid ${isDark ? '#B9BAA3' : '#0A100D'}40`,
                         fontFamily: "'Montserrat', sans-serif"
                       }}
                     >
@@ -266,25 +263,22 @@ export default function Home() {
             style={{ 
               backgroundColor: `${colors.dark}80`,
               backdropFilter: "blur(12px)",
-              border: `1px solid ${colors.gray}20`
+              border: `1px solid ${isDark ? '#B9BAA3' : '#0A100D'}20`
             }}
           >
             {tabs.map((tab) => (
               <motion.button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`px-4 py-2 text-xs font-medium rounded-lg transition-all duration-300 ${activeTab === tab.id
-                    ? "text-white"
-                    : "hover:text-white"
-                  }`}
+                className={`px-4 py-2 text-xs font-medium rounded-lg transition-all duration-300`}
                 style={{ 
                   fontFamily: "'Montserrat', sans-serif",
-                  backgroundColor: activeTab === tab.id ? colors.accent2 : "transparent",
-                  color: activeTab === tab.id ? colors.light : colors.gray
+                  backgroundColor: activeTab === tab.id ? (isDark ? '#902923' : '#973e34') : "transparent",
+                  color: activeTab === tab.id ? (isDark ? '#B9BAA3' : '#FDF8F2') : (isDark ? '#B9BAA3' : '#0A100D')
                 }}
                 whileHover={{ 
                   scale: 1.05,
-                  backgroundColor: activeTab === tab.id ? colors.accent2 : `${colors.accent1}20`
+                  backgroundColor: activeTab === tab.id ? (isDark ? '#902923' : '#973e34') : `${isDark ? '#902923' : '#973e34'}20`
                 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -321,7 +315,7 @@ export default function Home() {
                 <div 
                   className="rounded-2xl overflow-hidden shadow-2xl"
                   style={{ 
-                    border: `1px solid ${colors.gray}20`
+                    border: `1px solid ${isDark ? '#B9BAA3' : '#0A100D'}20`
                   }}
                 >
                   <div 
@@ -334,23 +328,27 @@ export default function Home() {
                       justifyContent: 'center'
                     }}
                   >
-                    <div className="text-center p-6 bg-black/50 rounded-xl backdrop-blur-sm border"
-                      style={{ borderColor: `${colors.gray}40` }}
+                    <div className="text-center p-6 rounded-xl backdrop-blur-sm border"
+                      style={{ 
+                        backgroundColor: isDark ? '#0A100DCC' : '#fdf8f270', // Light theme gets FDF8F2 (no opacity)
+                        borderColor: `${isDark ? '#B9BAA3' : '#0A100D'}40`,
+                        boxShadow: isDark ? 'none' : '0 4px 12px rgba(0,0,0,0.05)'
+                      }}
                     >
                       <div className="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto mb-6 flex items-center justify-center"
-                        style={{ backgroundColor: colors.accent2 }}
+                        style={{ backgroundColor: isDark ? '#902923' : '#973e34' }}
                       >
-                        <Users className="w-12 h-12 md:w-16 md:h-16" style={{ color: colors.light }} />
+                        <Users className="w-12 h-12 md:w-16 md:h-16" style={{ color: isDark ? '#B9BAA3' : '#FDF8F2' }} />
                       </div>
                       <h3 
                         className="text-2xl md:text-3xl font-bold mb-2"
-                        style={{ color: colors.light, fontFamily: "'Montserrat', sans-serif" }}
+                        style={{ color: isDark ? '#B9BAA3' : '#0A100D', fontFamily: "'Montserrat', sans-serif" }}
                       >
                         Founders' Vision
                       </h3>
                       <p 
                         className="text-base md:text-lg"
-                        style={{ color: colors.gray,fontFamily: "'Montserrat', sans-serif" }}
+                        style={{ color: isDark ? '#B9BAA3' : '#0A100D', fontFamily: "'Montserrat', sans-serif" }}
                       >
                         Mashal & Ammal
                       </p>
@@ -364,7 +362,7 @@ export default function Home() {
                 <p 
                   className="text-xl md:text-2xl leading-relaxed mb-8"
                   style={{ 
-                    color: colors.gray,
+                    color: isDark ? '#B9BAA3' : '#0A100D',
                     fontFamily: "'Montserrat', sans-serif"
                   }}
                 >
@@ -375,7 +373,7 @@ export default function Home() {
                   {/* Mission */}
                   <div className="flex items-start">
                     <div className="mr-4 mt-1">
-                      <Target className="w-8 h-8" style={{ color: colors.accent1 }} />
+                      <Target className="w-8 h-8" style={{ color: isDark ? '#902923' : '#973e34' }} />
                     </div>
                     <div>
                       <h3 
@@ -390,7 +388,7 @@ export default function Home() {
                       <p 
                         className="text-base md:text-lg"
                         style={{ 
-                          color: colors.gray,
+                          color: isDark ? '#B9BAA3' : '#0A100D',
                           fontFamily: "'Montserrat', sans-serif"
                         }}
                       >
@@ -402,7 +400,7 @@ export default function Home() {
                   {/* Vision */}
                   <div className="flex items-start">
                     <div className="mr-4 mt-1">
-                      <Eye className="w-8 h-8" style={{ color: colors.accent1 }} />
+                      <Eye className="w-8 h-8" style={{ color: isDark ? '#902923' : '#973e34' }} />
                     </div>
                     <div>
                       <h3 
@@ -417,7 +415,7 @@ export default function Home() {
                       <p 
                         className="text-base md:text-lg"
                         style={{ 
-                          color: colors.gray,
+                          color: isDark ? '#B9BAA3' : '#0A100D',
                           fontFamily: "'Montserrat', sans-serif"
                         }}
                       >
@@ -457,7 +455,7 @@ export default function Home() {
       
       {/* Marquee Container */}
       <div className="relative overflow-hidden py-4">
-        {/* Marquee Track - Faster animation */}
+        {/* Marquee Track */}
         <div 
           className="flex"
           style={{ 
@@ -469,9 +467,8 @@ export default function Home() {
             {techPartners.map((partner, index) => (
               <div 
                 key={index}
-                className="flex items-center justify-center p-3 rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                className="flex items-center justify-center"
                 style={{ 
-                  backgroundColor: `${colors.dark}80`,
                   minWidth: '120px',
                   height: '70px'
                 }}
@@ -480,14 +477,14 @@ export default function Home() {
                   <img 
                     src={partner.logo} 
                     alt={partner.name}
-                    className="object-contain filter brightness-0 invert"
+                    className="object-contain"
                     style={{ 
-                      filter: 'brightness(0) invert(1)',
+                      filter: isDark ? 'brightness(0) invert(1)' : 'none',
                       height: '40px',
                       width: 'auto'
                     }}
                     onError={(e) => {
-                      e.target.src = `https://via.placeholder.com/100x40/0A100D/B9BAA3?text=${partner.name}`;
+                      e.target.src = `https://via.placeholder.com/100x40/${isDark ? '0A100D' : 'FDF8F2'}/${isDark ? 'B9BAA3' : '0A100D'}?text=${partner.name}`;
                     }}
                   />
                 </div>
@@ -495,14 +492,13 @@ export default function Home() {
             ))}
           </div>
           
-          {/* Duplicate Set for seamless looping */}
+          {/* Duplicate Set */}
           <div className="flex shrink-0 gap-6 md:gap-8 px-4">
             {techPartners.map((partner, index) => (
               <div 
                 key={`dup-${index}`}
-                className="flex items-center justify-center p-3 rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                className="flex items-center justify-center"
                 style={{ 
-                  backgroundColor: `${colors.dark}80`,
                   minWidth: '120px',
                   height: '70px'
                 }}
@@ -511,14 +507,14 @@ export default function Home() {
                   <img 
                     src={partner.logo} 
                     alt={partner.name}
-                    className="object-contain filter brightness-0 invert"
+                    className="object-contain"
                     style={{ 
-                      filter: 'brightness(0) invert(1)',
+                      filter: isDark ? 'brightness(0) invert(1)' : 'none',
                       height: '40px',
                       width: 'auto'
                     }}
                     onError={(e) => {
-                      e.target.src = `https://via.placeholder.com/100x40/0A100D/B9BAA3?text=${partner.name}`;
+                      e.target.src = `https://via.placeholder.com/100x40/${isDark ? '0A100D' : 'FDF8F2'}/${isDark ? 'B9BAA3' : '0A100D'}?text=${partner.name}`;
                     }}
                   />
                 </div>
@@ -566,8 +562,8 @@ export default function Home() {
               className="rounded-2xl p-6 md:p-8 lg:p-10"
               style={{ 
                 backgroundColor: colors.accent3,
-                backgroundImage: `linear-gradient(135deg, ${colors.accent1} 0%, ${colors.accent3} 100%)`,
-                border: `1px solid ${colors.accent2}`
+                backgroundImage: isDark ? `linear-gradient(135deg, ${isDark ? '#902923' : '#973e34'} 0%, ${colors.accent3} 100%)` : 'none',
+                border: `1px solid ${isDark ? '#902923' : '#973e34'}`
               }}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -581,7 +577,7 @@ export default function Home() {
                     className="rounded-xl p-5 text-center"
                     style={{ 
                       backgroundColor: `${colors.dark}40`,
-                      border: `1px solid ${colors.gray}10`
+                      border: `1px solid ${isDark ? '#B9BAA3' : '#0A100D'}10`
                     }}
                     whileHover={{ 
                       scale: 1.03,
@@ -589,7 +585,7 @@ export default function Home() {
                     }}
                   >
                     <div className="w-12 h-12 flex items-center justify-center rounded-full mx-auto mb-4"
-                      style={{ backgroundColor: colors.accent1 }}
+                      style={{ backgroundColor: isDark ? '#902923' : '#c94e40' }}
                     >
                       <div style={{ color: colors.light }}>
                         {item.icon}
@@ -607,7 +603,7 @@ export default function Home() {
                     <p 
                       className="text-sm md:text-base"
                       style={{ 
-                        color: colors.gray,
+                        color: isDark ? '#B9BAA3' : '#0A100D',
                         fontFamily: "'Montserrat', sans-serif"
                       }}
                     >
