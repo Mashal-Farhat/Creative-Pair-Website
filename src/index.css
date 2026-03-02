@@ -40,7 +40,9 @@
   --cp-text: #B9BAA3;     /* Light text */
   --cp-accent: #902923;   /* Deeper rust for primary accent */
   --cp-accent2: #902923;  /* Deeper rust for secondary accent */
-  --cp-muted: #B9BAA3;    /* Light text for muted (with opacity) */
+  --cp-muted: #B9BAA3;   /* Light text for muted elements (with opacity) */
+  
+   /* rgb helpers for translucent effects */
   
   --cp-accent-rgb: 144,41,35;  /* #902923 */
   --cp-accent2-rgb: 144,41,35; /* #902923 */
