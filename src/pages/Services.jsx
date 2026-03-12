@@ -354,54 +354,175 @@ export default function Services() {
           </motion.div>
         </div>
       </section>
+        {/* Our Process */}
+        <section className="py-16 md:py-24 px-4 md:px-8 overflow-hidden">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-20"
+            >
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 font-heading text-white">
+                Our{" "}
+                <span className="text-accent">Process</span>
+              </h2>
+              <p className="text-lg max-w-2xl mx-auto text-gray-400 font-body">
+                A structured approach to ensure your project's success from idea to launch
+              </p>
+            </motion.div>
 
-      {/* Our Process */}
-      <section className="py-16 md:py-24 px-4 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 font-heading text-white">
-              Our{" "}
-              <span className="text-accent">Process</span>
-            </h2>
-            <p className="text-lg max-w-2xl mx-auto text-gray-400 font-body">
-              A structured approach to ensure your project's success from idea to launch
-            </p>
-          </motion.div>
+            {/* Wavy Path Container */}
+            <div className="relative hidden md:block" style={{ height: "320px" }}>
+              {/* SVG Wavy Dashed Path */}
+              <svg
+                className="absolute inset-0 w-full h-full"
+                viewBox="0 0 1100 280"
+                preserveAspectRatio="none"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <motion.path
+                  d="M 60 180 C 160 180 200 80 300 80 C 400 80 440 220 540 220 C 640 220 680 60 780 60 C 880 60 920 200 1040 200"
+                  stroke="var(--cp-accent, #973e34)"
+                  strokeWidth="2"
+                  strokeDasharray="10 8"
+                  fill="none"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.8, ease: "easeInOut" }}
+                />
+              </svg>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {processSteps.map((step, index) => (
+              {/* Step 1 — Discovery — left, below path */}
               <motion.div
-                key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="relative p-6 rounded-2xl text-center bg-brand-card border border-white/10"
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="absolute"
+                style={{ left: "3%", top: "52%" }}
               >
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full flex items-center justify-center bg-accent text-white">
-                  {step.number}
+                {/* Icon on path */}
+                <div className="w-10 h-10 rounded-full border-2 border-accent bg-brand-dark flex items-center justify-center mb-3 mx-auto text-accent">
+                  <Target className="w-4 h-4" />
                 </div>
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 bg-accent/10 text-accent">
-                  {step.icon}
+                {/* Big background number */}
+                <div className="relative">
+                  <span className="absolute -top-8 -left-4 text-8xl font-black text-white/5 select-none leading-none font-heading">1</span>
+                  <div className="relative z-10">
+                    <h3 className="text-lg font-bold font-heading text-white mb-1">Discovery</h3>
+                    <p className="text-sm text-gray-400 font-body max-w-[160px] leading-snug">
+                      Understanding your vision, goals, and requirements
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3 font-heading text-white">
-                  {step.title}
-                </h3>
-                <p className="text-gray-400 font-body">
-                  {step.description}
-                </p>
               </motion.div>
-            ))}
+
+              {/* Step 2 — Design — left-center, above path */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="absolute"
+                style={{ left: "27%", top: "2%" }}
+              >
+                <div className="relative">
+                  <span className="absolute -top-2 -left-4 text-8xl font-black text-white/5 select-none leading-none font-heading">2</span>
+                  <div className="relative z-10">
+                    <h3 className="text-lg font-bold font-heading text-white mb-1">Design</h3>
+                    <p className="text-sm text-gray-400 font-body max-w-[160px] leading-snug">
+                      Creating intuitive interfaces and user experiences
+                    </p>
+                  </div>
+                </div>
+                {/* Icon on path */}
+                <div className="w-10 h-10 rounded-full border-2 border-accent bg-brand-dark flex items-center justify-center mt-3 mx-auto text-accent">
+                  <Paintbrush className="w-4 h-4" />
+                </div>
+              </motion.div>
+
+              {/* Step 3 — Development — right-center, above path */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="absolute"
+                style={{ left: "56%", top: "0%" }}
+              >
+                <div className="relative">
+                  <span className="absolute -top-2 -left-4 text-8xl font-black text-white/5 select-none leading-none font-heading">3</span>
+                  <div className="relative z-10">
+                    <h3 className="text-lg font-bold font-heading text-white mb-1">Development</h3>
+                    <p className="text-sm text-gray-400 font-body max-w-[160px] leading-snug">
+                      Building robust and scalable solutions
+                    </p>
+                  </div>
+                </div>
+                {/* Icon on path */}
+                <div className="w-10 h-10 rounded-full border-2 border-accent bg-brand-dark flex items-center justify-center mt-3 mx-auto text-accent">
+                  <Code className="w-4 h-4" />
+                </div>
+              </motion.div>
+
+              {/* Step 4 — Deployment — right, below path */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.9 }}
+                className="absolute"
+                style={{ left: "82%", top: "46%" }}
+              >
+                {/* Icon on path */}
+                <div className="w-10 h-10 rounded-full border-2 border-accent bg-brand-dark flex items-center justify-center mb-3 mx-auto text-accent">
+                  <Rocket className="w-4 h-4" />
+                </div>
+                <div className="relative">
+                  <span className="absolute -top-8 -left-4 text-8xl font-black text-white/5 select-none leading-none font-heading">4</span>
+                  <div className="relative z-10">
+                    <h3 className="text-lg font-bold font-heading text-white mb-1">Deployment</h3>
+                    <p className="text-sm text-gray-400 font-body max-w-[160px] leading-snug">
+                      Launching and optimizing your digital product
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Mobile fallback — vertical stacked */}
+            <div className="md:hidden flex flex-col gap-8">
+              {processSteps.map((step, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex items-start gap-4"
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-10 h-10 rounded-full border-2 border-accent bg-brand-dark flex items-center justify-center text-accent shrink-0">
+                      {step.icon}
+                    </div>
+                    {index < processSteps.length - 1 && (
+                      <div className="w-px h-12 border-l-2 border-dashed border-accent/40 mt-2" />
+                    )}
+                  </div>
+                  <div className="pt-1">
+                    <span className="text-5xl font-black text-white/5 font-heading leading-none block -mb-2">{step.number}</span>
+                    <h3 className="text-lg font-bold font-heading text-white">{step.title}</h3>
+                    <p className="text-sm text-gray-400 font-body mt-1">{step.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Services Grid */}
       <section className="py-16 md:py-24 px-4 md:px-8">
