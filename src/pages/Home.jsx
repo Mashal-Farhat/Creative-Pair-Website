@@ -13,36 +13,46 @@ const whatWeDoServices = [
     label: "UI/UX Design",
     shortDesc: "We craft interfaces that feel inevitable — clean, purposeful, and deeply human. Every pixel earns its place.",
     image: "https://images.unsplash.com/photo-1545235617-9465d2a55698?auto=format&fit=crop&w=1200&q=90",
+    tag: "Design",
   },
   {
     number: "02",
     label: "Web Development",
     shortDesc: "From landing pages to full-stack platforms — we build fast, scalable web products that hold up under pressure.",
     image: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=1200&q=90",
+    tag: "Engineering",
   },
   {
     number: "03",
     label: "App Development",
     shortDesc: "Native-quality cross-platform apps built with React Native. Smooth, offline-capable, and store-ready.",
     image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=90",
+    tag: "Mobile",
   },
   {
     number: "04",
     label: "Backend & Cloud",
     shortDesc: "Robust APIs, secure databases, and cloud infrastructure built to scale without breaking a sweat.",
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=90",
+    tag: "Infrastructure",
   },
   {
     number: "05",
     label: "Consulting",
     shortDesc: "We sit with you, understand the problem, and chart the clearest path — strategy that turns complexity into clarity.",
     image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=90",
+    tag: "Strategy",
   },
 ];
 
 function WhatWeDoCarousel({ colors, isDark }) {
   const [hovered, setHovered] = useState(null);
+  const [mobileActive, setMobileActive] = useState(0);
   const active = hovered !== null ? hovered : 0;
+
+  const accent = isDark ? "#902923" : "#973e34";
+  const listBg = isDark ? "#0e1410" : "#F5EFE8";
+  const font = "'Montserrat', sans-serif";
 
   return (
     <motion.div
@@ -50,239 +60,340 @@ function WhatWeDoCarousel({ colors, isDark }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7 }}
-      className="flex rounded-2xl overflow-hidden"
-      style={{
-        height: "520px",
-        border: `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}12`,
-      }}
     >
-      {/* ── LEFT 30%: Service List ── */}
-      <div
-        className="flex flex-col justify-between relative z-10 shrink-0"
-        style={{
-          width: "30%",
-          backgroundColor: isDark ? "#0e1410" : "#F5EFE8",
-          borderRight: `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}10`,
-        }}
-      >
-        {/* Top label */}
-        <div
-          className="px-6 pt-7 pb-4"
-          style={{
-            borderBottom: `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}10`,
-          }}
-        >
-          <span
-            className="text-xs font-semibold uppercase tracking-[0.2em]"
-            style={{ color: isDark ? "#902923" : "#973e34", fontFamily: "'Montserrat', sans-serif" }}
-          >
-            Our Services
-          </span>
-        </div>
-
-        {/* Service rows */}
-        <div className="flex flex-col flex-1">
+      {/* ━━━ MOBILE VIEW (< md) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="block md:hidden">
+        <div className="flex flex-col gap-3">
           {whatWeDoServices.map((service, index) => {
-            const isActive = active === index;
+            const isOpen = mobileActive === index;
             return (
               <motion.div
                 key={service.number}
-                onMouseEnter={() => setHovered(index)}
-                onMouseLeave={() => setHovered(null)}
-                className="relative flex items-center gap-3 px-6 cursor-pointer flex-1"
+                onClick={() => setMobileActive(isOpen ? -1 : index)}
+                className="relative overflow-hidden rounded-2xl cursor-pointer"
+                animate={{ height: isOpen ? 220 : 64 }}
+                transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
                 style={{
-                  borderBottom:
-                    index < whatWeDoServices.length - 1
-                      ? `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}08`
-                      : "none",
-                  backgroundColor: isActive
-                    ? isDark ? "#902923" + "18" : "#973e34" + "12"
-                    : "transparent",
-                  transition: "background-color 0.3s ease",
+                  border: `1px solid ${isOpen ? accent : (isDark ? "#B9BAA3" : "#0A100D")}20`,
                 }}
-                animate={{ x: isActive ? 4 : 0 }}
-                transition={{ duration: 0.25 }}
               >
-                {/* Active bar */}
-                <motion.div
-                  className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r-full"
-                  style={{ backgroundColor: isDark ? "#902923" : "#973e34" }}
-                  animate={{ opacity: isActive ? 1 : 0, scaleY: isActive ? 1 : 0.3 }}
-                  transition={{ duration: 0.25 }}
+                {/* Background image when open */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${service.image})`,
+                    opacity: isOpen ? 1 : 0,
+                    transition: "opacity 0.45s ease",
+                  }}
                 />
 
-                {/* Number */}
-                <span
-                  className="text-xs font-black shrink-0"
-                  style={{
-                    color: isActive
-                      ? isDark ? "#902923" : "#973e34"
-                      : isDark ? "#B9BAA340" : "#0A100D30",
-                    fontFamily: "'Montserrat', sans-serif",
-                    transition: "color 0.3s ease",
-                  }}
-                >
-                  {service.number}
-                </span>
+                {/* Dark gradient when open */}
+                {isOpen && (
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: "linear-gradient(135deg, #0A100DF5 0%, #0A100DB0 50%, #0A100D60 100%)",
+                    }}
+                  />
+                )}
 
-                {/* Label */}
-                <span
-                  className="text-sm font-semibold leading-tight"
-                  style={{
-                    color: isActive
-                      ? isDark ? "#B9BAA3" : "#0A100D"
-                      : isDark ? "#B9BAA370" : "#0A100D60",
-                    fontFamily: "'Montserrat', sans-serif",
-                    transition: "color 0.3s ease",
-                  }}
-                >
-                  {service.label}
-                </span>
+                {/* Flat bg when closed */}
+                {!isOpen && (
+                  <div className="absolute inset-0" style={{ backgroundColor: listBg }} />
+                )}
 
-                {/* Arrow */}
-                <motion.div
-                  className="ml-auto shrink-0"
-                  animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -6 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={isDark ? "#902923" : "#973e34"}
-                    strokeWidth="2.5"
+                {/* Header row */}
+                <div className="relative z-10 flex items-center gap-3 px-5 h-16">
+                  <motion.div
+                    className="absolute left-0 top-3 bottom-3 w-[3px] rounded-r-full"
+                    style={{ backgroundColor: accent }}
+                    animate={{ opacity: isOpen ? 1 : 0, scaleY: isOpen ? 1 : 0 }}
+                    transition={{ duration: 0.25 }}
+                  />
+
+                  <span
+                    className="text-xs font-black shrink-0 w-7"
+                    style={{
+                      color: isOpen ? accent : isDark ? "#B9BAA350" : "#0A100D35",
+                      fontFamily: font,
+                      transition: "color 0.3s",
+                    }}
                   >
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </motion.div>
+                    {service.number}
+                  </span>
+
+                  <span
+                    className="font-bold text-sm flex-1"
+                    style={{
+                      color: isOpen ? "#FDF8F2" : isDark ? "#B9BAA3" : "#0A100D",
+                      fontFamily: font,
+                      transition: "color 0.3s",
+                    }}
+                  >
+                    {service.label}
+                  </span>
+
+                  <span
+                    className="text-[10px] font-semibold px-2.5 py-1 rounded-full shrink-0"
+                    style={{
+                      backgroundColor: isOpen ? `${accent}30` : isDark ? "#B9BAA310" : "#0A100D08",
+                      color: isOpen ? "#FDF8F2" : isDark ? "#B9BAA360" : "#0A100D50",
+                      fontFamily: font,
+                      transition: "all 0.3s",
+                      border: `1px solid ${isOpen ? accent + "50" : "transparent"}`,
+                    }}
+                  >
+                    {service.tag}
+                  </span>
+
+                  <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="shrink-0 ml-1"
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke={isOpen ? "#FDF8F2" : isDark ? "#B9BAA360" : "#0A100D40"}
+                      strokeWidth="2.5"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </motion.div>
+                </div>
+
+                {/* Expanded body */}
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3, delay: 0.15 }}
+                      className="relative z-10 px-5 pb-5"
+                    >
+                      <p
+                        className="text-sm leading-relaxed mb-4"
+                        style={{ color: "rgba(253,248,242,0.75)", fontFamily: font }}
+                      >
+                        {service.shortDesc}
+                      </p>
+                      <a href="/services" className="no-underline inline-flex items-center gap-1.5">
+                        <span
+                          className="text-xs font-semibold"
+                          style={{ color: "#c94e40", fontFamily: font }}
+                        >
+                          Learn more
+                        </span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c94e40" strokeWidth="2.5">
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                          <polyline points="12 5 19 12 12 19" />
+                        </svg>
+                      </a>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Bottom CTA */}
-        <div
-          className="px-6 py-5"
-          style={{ borderTop: `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}10` }}
-        >
-          <a href="/services" className="no-underline">
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold"
-              style={{
-                backgroundColor: isDark ? "#902923" : "#973e34",
-                color: "#fff",
-                fontFamily: "'Montserrat', sans-serif",
-              }}
-            >
-              View All Services
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </motion.div>
-          </a>
-        </div>
+        {/* Mobile CTA */}
+        <a href="/services" className="no-underline block mt-4">
+          <motion.div
+            whileTap={{ scale: 0.97 }}
+            className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold"
+            style={{ backgroundColor: accent, color: "#fff", fontFamily: font }}
+          >
+            View All Services
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </motion.div>
+        </a>
       </div>
 
-      {/* ── RIGHT 70%: Image + Description ── */}
-      <div className="relative flex-1 overflow-hidden">
-        {/* Images — crossfade on hover */}
-        {whatWeDoServices.map((service, index) => (
-          <motion.div
-            key={service.number}
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${service.image})` }}
-            animate={{ opacity: active === index ? 1 : 0 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-          />
-        ))}
-
-        {/* Permanent dark gradient from bottom */}
+      {/* ━━━ DESKTOP VIEW (≥ md) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div
+        className="hidden md:flex rounded-2xl overflow-hidden"
+        style={{
+          height: "520px",
+          border: `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}12`,
+        }}
+      >
+        {/* LEFT 30% */}
         <div
-          className="absolute inset-0"
+          className="flex flex-col justify-between relative z-10 shrink-0"
           style={{
-            background: `linear-gradient(
-              to top,
-              ${isDark ? "#0A100D" : "#0A100D"}F0 0%,
-              ${isDark ? "#0A100D" : "#0A100D"}80 35%,
-              ${isDark ? "#0A100D" : "#0A100D"}20 65%,
-              transparent 100%
-            )`,
+            width: "30%",
+            backgroundColor: listBg,
+            borderRight: `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}10`,
           }}
-        />
-
-        {/* Left edge blend into the list panel */}
-        <div
-          className="absolute left-0 top-0 bottom-0 w-16"
-          style={{
-            background: `linear-gradient(to right, ${isDark ? "#0e1410" : "#F5EFE8"}, transparent)`,
-          }}
-        />
-
-        {/* Content area — bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-8">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          <div
+            className="px-6 pt-7 pb-4"
+            style={{ borderBottom: `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}10` }}
+          >
+            <span
+              className="text-xs font-semibold uppercase tracking-[0.2em]"
+              style={{ color: accent, fontFamily: font }}
             >
-              {/* Service number */}
-              <span
-                className="block text-7xl font-black leading-none mb-2 select-none"
-                style={{
-                  color: isDark ? "#902923" : "#c94e40",
-                  fontFamily: "'Montserrat', sans-serif",
-                  opacity: 0.9,
-                }}
-              >
-                {whatWeDoServices[active].number}
-              </span>
+              Our Services
+            </span>
+          </div>
 
-              {/* Service name */}
-              <h3
-                className="text-2xl md:text-3xl font-bold mb-3"
-                style={{
-                  color: "#FDF8F2",
-                  fontFamily: "'Montserrat', sans-serif",
-                  lineHeight: 1.2,
-                }}
-              >
-                {whatWeDoServices[active].label}
-              </h3>
+          <div className="flex flex-col flex-1">
+            {whatWeDoServices.map((service, index) => {
+              const isActive = active === index;
+              return (
+                <motion.div
+                  key={service.number}
+                  onMouseEnter={() => setHovered(index)}
+                  onMouseLeave={() => setHovered(null)}
+                  className="relative flex items-center gap-3 px-6 cursor-pointer flex-1"
+                  style={{
+                    borderBottom:
+                      index < whatWeDoServices.length - 1
+                        ? `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}08`
+                        : "none",
+                    backgroundColor: isActive ? accent + "18" : "transparent",
+                    transition: "background-color 0.3s ease",
+                  }}
+                  animate={{ x: isActive ? 4 : 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <motion.div
+                    className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r-full"
+                    style={{ backgroundColor: accent }}
+                    animate={{ opacity: isActive ? 1 : 0, scaleY: isActive ? 1 : 0.3 }}
+                    transition={{ duration: 0.25 }}
+                  />
+                  <span
+                    className="text-xs font-black shrink-0"
+                    style={{
+                      color: isActive ? accent : isDark ? "#B9BAA340" : "#0A100D30",
+                      fontFamily: font,
+                      transition: "color 0.3s ease",
+                    }}
+                  >
+                    {service.number}
+                  </span>
+                  <span
+                    className="text-sm font-semibold leading-tight"
+                    style={{
+                      color: isActive
+                        ? isDark ? "#B9BAA3" : "#0A100D"
+                        : isDark ? "#B9BAA370" : "#0A100D60",
+                      fontFamily: font,
+                      transition: "color 0.3s ease",
+                    }}
+                  >
+                    {service.label}
+                  </span>
+                  <motion.div
+                    className="ml-auto shrink-0"
+                    animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -6 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2.5">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+          </div>
 
-              {/* Description */}
-              <p
-                className="text-sm md:text-base max-w-md leading-relaxed"
-                style={{
-                  color: "rgba(253,248,242,0.72)",
-                  fontFamily: "'Montserrat', sans-serif",
-                }}
+          <div
+            className="px-6 py-5"
+            style={{ borderTop: `1px solid ${isDark ? "#B9BAA3" : "#0A100D"}10` }}
+          >
+            <a href="/services" className="no-underline">
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold"
+                style={{ backgroundColor: accent, color: "#fff", fontFamily: font }}
               >
-                {whatWeDoServices[active].shortDesc}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+                View All Services
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </motion.div>
+            </a>
+          </div>
         </div>
 
-        {/* Top-right: pagination dots */}
-        <div className="absolute top-6 right-6 flex gap-1.5">
-          {whatWeDoServices.map((_, index) => (
+        {/* RIGHT 70% */}
+        <div className="relative flex-1 overflow-hidden">
+          {whatWeDoServices.map((service, index) => (
             <motion.div
-              key={index}
-              className="rounded-full cursor-pointer"
-              style={{ backgroundColor: active === index ? (isDark ? "#902923" : "#c94e40") : "rgba(255,255,255,0.25)" }}
-              animate={{ width: active === index ? 20 : 6, height: 6 }}
-              transition={{ duration: 0.3 }}
-              onClick={() => setHovered(index === hovered ? null : index)}
+              key={service.number}
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${service.image})` }}
+              animate={{ opacity: active === index ? 1 : 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
             />
           ))}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(to top, #0A100DF0 0%, #0A100D80 35%, #0A100D20 65%, transparent 100%)",
+            }}
+          />
+          <div
+            className="absolute left-0 top-0 bottom-0 w-16"
+            style={{ background: `linear-gradient(to right, ${listBg}, transparent)` }}
+          />
+          <div className="absolute bottom-0 left-0 right-0 p-8">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <span
+                  className="block text-7xl font-black leading-none mb-2 select-none"
+                  style={{ color: isDark ? "#902923" : "#c94e40", fontFamily: font, opacity: 0.9 }}
+                >
+                  {whatWeDoServices[active].number}
+                </span>
+                <h3
+                  className="text-2xl md:text-3xl font-bold mb-3"
+                  style={{ color: "#FDF8F2", fontFamily: font, lineHeight: 1.2 }}
+                >
+                  {whatWeDoServices[active].label}
+                </h3>
+                <p
+                  className="text-sm md:text-base max-w-md leading-relaxed"
+                  style={{ color: "rgba(253,248,242,0.72)", fontFamily: font }}
+                >
+                  {whatWeDoServices[active].shortDesc}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="absolute top-6 right-6 flex gap-1.5">
+            {whatWeDoServices.map((_, index) => (
+              <motion.div
+                key={index}
+                className="rounded-full cursor-pointer"
+                style={{
+                  backgroundColor: active === index ? (isDark ? "#902923" : "#c94e40") : "rgba(255,255,255,0.25)",
+                }}
+                animate={{ width: active === index ? 20 : 6, height: 6 }}
+                transition={{ duration: 0.3 }}
+                onClick={() => setHovered(index === hovered ? null : index)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </motion.div>
