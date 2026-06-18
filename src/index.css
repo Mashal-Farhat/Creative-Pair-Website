@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './styles/generated-utils.css';
 
 :root {
   /* Light mode palette */

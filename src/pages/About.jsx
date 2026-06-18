@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Lightbulb, Target, Users, Zap, Globe, Award, Heart, Sparkles, Code, Shield, Clock, Handshake, BookOpen, Rocket } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import Typewriter from "../components/Typewriter";
+import { Typewriter } from "../components";
 
 export default function About() {
   const [hoveredCard, setHoveredCard] = useState(null);
